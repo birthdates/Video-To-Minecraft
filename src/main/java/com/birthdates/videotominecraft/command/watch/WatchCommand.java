@@ -1,0 +1,89 @@
+package com.birthdates.videotominecraft.command.watch;
+
+import com.birthdates.videotominecraft.VideoToMinecraft;
+import com.birthdates.videotominecraft.command.PlayerOnlyCommand;
+import com.birthdates.videotominecraft.maps.Maps;
+import com.birthdates.videotominecraft.maps.renderer.MapImageRenderer;
+import com.birthdates.videotominecraft.movie.Movie;
+import com.birthdates.videotominecraft.worker.impl.ExtractWorker;
+import com.birthdates.videotominecraft.worker.impl.FrameWorker;
+import org.bukkit.ChatColor;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+
+import java.io.File;
+
+/**
+ * Base watch command to watch a video on a map item
+ */
+public class WatchCommand extends PlayerOnlyCommand {
+
+    private final boolean rotate;
+    private final String permission;
+
+    public WatchCommand() {
+        rotate = false;
+        permission = "videotominecraft.watch";
+    }
+
+    public WatchCommand(boolean rotate, String permission) {
+        this.rotate = rotate;
+        this.permission = permission;
+    }
+
+    @Override
+    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+        if (!super.onCommand(sender, command, label, args)) return false; //is not a player
+
+        if(!sender.hasPermission(permission)) {
+            sender.sendMessage(ChatColor.RED + "You don't have permission to execute this command.");
+            return false;
+        }
+
+        if (args.length < 1) {
+            sender.sendMessage(ChatColor.RED + "Usage: /" + label + " <name>");
+            return false;
+        }
+
+        String id = args[0];
+        String filePath = VideoToMinecraft.getInstance().getDataFolder() + "/" + id + ".mp4";
+        File file = new File(filePath);
+
+        if (!file.exists()) {
+            sender.sendMessage(ChatColor.RED + "Invalid video!");
+            return false;
+        }
+        String newId = (rotate ? "rotated-" + Movie.GRID_SIZE + "-" : "") + id + "-" + VideoToMinecraft.getInstance().getFPS(); //use fps to ensure the correct framerate & grid size to ensure correct resolution
+        String outputDir = VideoToMinecraft.getInstance().getDataFolder() + "/frames/" + newId + "/";
+        sender.sendMessage(ChatColor.GREEN + "Extracting...");
+
+        ExtractWorker extractor = new ExtractWorker(file, outputDir);
+        extractor.start(rotate, () -> handleVideo(sender, outputDir));
+        return true;
+    }
+
+    protected void handleVideo(CommandSender sender, String framePath) {
+        handleExtract(sender, framePath);
+    }
+
+    private void handleExtract(CommandSender sender, String framePath) {
+        Player player = (Player) sender;
+        MapImageRenderer imageRenderer = new MapImageRenderer();
+        ItemStack itemStack = Maps.createMap(player, player.getWorld(), imageRenderer);
+        FrameWorker frameWorker = new FrameWorker(itemStack, framePath);
+
+        frameWorker.start((bufferedImage -> {
+            imageRenderer.setBufferedImage(bufferedImage);
+            imageRenderer.sendToPlayer(player);
+        }), () -> {
+            player.getInventory().remove(itemStack);
+            player.sendMessage(ChatColor.GREEN + "Video complete.");
+        });
+
+
+        player.getInventory().setItemInMainHand(itemStack);
+        sender.sendMessage(ChatColor.GREEN + "Spawned.");
+    }
+}

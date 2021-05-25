@@ -1,0 +1,16 @@
+name: VideoToMinecraft
+author: birthdates
+version: 1.0.0
+main: com.birthdates.videotominecraft.VideoToMinecraft
+description: Project video onto a canvas
+api-version: 1.13
+commands:
+  watch:
+  watchmovie:
+  stopwatching:
+
+permissions:
+  videotominecraft.watch:
+    description: "Used for /watch"
+  videotominecraft.watchmovie:
+    description: "Used for /watchmovie"
