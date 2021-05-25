@@ -28,10 +28,7 @@ public class VideoToMinecraft extends JavaPlugin {
     }
 
     public void onDisable() {
-        for (int i = Worker.getWorkers().size() - 1; i >= 0; i--) { //loop in reverse to prevent CME
-            Worker worker = Worker.getWorkers().get(i);
-            worker.finish();
-        }
+        stopWorkers();
     }
 
     public void resizePool() {
@@ -56,5 +53,12 @@ public class VideoToMinecraft extends JavaPlugin {
         File folder = getDataFolder();
         if (folder.exists() || folder.mkdir()) return;
         throw new IllegalStateException("Failed to create data folder.");
+    }
+
+    private void stopWorkers() {
+        for (int i = Worker.getWorkers().size() - 1; i >= 0; i--) { //loop in reverse to prevent CME
+            Worker worker = Worker.getWorkers().get(i);
+            worker.finish();
+        }
     }
 }
