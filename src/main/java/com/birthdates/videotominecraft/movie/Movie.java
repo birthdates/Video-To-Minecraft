@@ -95,8 +95,7 @@ public class Movie {
      */
     private class MovieBoard {
         private final MapImageRenderer renderer;
-        private final int x;
-        private final int y;
+        private final int x, y;
         private final LinkedList<BufferedImage> cache = new LinkedList<>();
 
         public MovieBoard(Location location, int x, int y) {
@@ -122,7 +121,6 @@ public class Movie {
         }
 
         private void spawnMap(Location location) {
-
             World world = location.getWorld();
             ItemStack map = Maps.createMap(null, world, renderer);
             location.getBlock().setType(Material.BARRIER);

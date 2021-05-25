@@ -8,11 +8,13 @@ import com.birthdates.videotominecraft.movie.Movie;
 import com.birthdates.videotominecraft.worker.impl.ExtractWorker;
 import com.birthdates.videotominecraft.worker.impl.FrameWorker;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
+import java.awt.image.BufferedImage;
 import java.io.File;
 
 /**
@@ -74,16 +76,26 @@ public class WatchCommand extends PlayerOnlyCommand {
         ItemStack itemStack = Maps.createMap(player, player.getWorld(), imageRenderer);
         FrameWorker frameWorker = new FrameWorker(itemStack, framePath);
 
-        frameWorker.start((bufferedImage -> {
-            imageRenderer.setBufferedImage(bufferedImage);
-            imageRenderer.sendToPlayer(player);
-        }), () -> {
-            player.getInventory().remove(itemStack);
-            player.sendMessage(ChatColor.GREEN + "Video complete.");
-        });
-
-
-        player.getInventory().setItemInMainHand(itemStack);
+        frameWorker.start((bufferedImage -> renderAndSendToPlayer(bufferedImage, player, imageRenderer)), () -> onVideoEnd(player, itemStack));
+        addOrSetItemInHand(player, itemStack);
         sender.sendMessage(ChatColor.GREEN + "Spawned.");
+    }
+
+    private void addOrSetItemInHand(Player player, ItemStack itemStack) {
+        if(player.getInventory().getItemInMainHand().getType() == Material.AIR) {
+            player.getInventory().setItemInMainHand(itemStack);
+            return;
+        }
+        player.getInventory().addItem(itemStack);
+    }
+
+    private void onVideoEnd(Player player, ItemStack toRemove) {
+        player.getInventory().remove(toRemove);
+        player.sendMessage(ChatColor.GREEN + "Video complete.");
+    }
+
+    private void renderAndSendToPlayer(BufferedImage bufferedImage, Player player, MapImageRenderer imageRenderer) {
+        imageRenderer.setBufferedImage(bufferedImage);
+        imageRenderer.sendToPlayer(player);
     }
 }
