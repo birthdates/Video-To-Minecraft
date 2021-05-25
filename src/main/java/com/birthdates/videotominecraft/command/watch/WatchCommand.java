@@ -62,27 +62,26 @@ public class WatchCommand extends PlayerOnlyCommand {
         sender.sendMessage(ChatColor.GREEN + "Extracting...");
 
         ExtractWorker extractor = new ExtractWorker(file, outputDir);
-        extractor.start(rotate, () -> handleVideo(sender, outputDir));
+        extractor.start(rotate, () -> handleVideo((Player) sender, outputDir));
         return true;
     }
 
-    protected void handleVideo(CommandSender sender, String framePath) {
-        handleExtract(sender, framePath);
+    protected void handleVideo(Player player, String framePath) {
+        handleExtract(player, framePath);
     }
 
-    private void handleExtract(CommandSender sender, String framePath) {
-        Player player = (Player) sender;
+    private void handleExtract(Player player, String framePath) {
         MapImageRenderer imageRenderer = new MapImageRenderer();
         ItemStack itemStack = Maps.createMap(player, player.getWorld(), imageRenderer);
         FrameWorker frameWorker = new FrameWorker(itemStack, framePath);
 
         frameWorker.start((bufferedImage -> renderAndSendToPlayer(bufferedImage, player, imageRenderer)), () -> onVideoEnd(player, itemStack));
         addOrSetItemInHand(player, itemStack);
-        sender.sendMessage(ChatColor.GREEN + "Spawned.");
+        player.sendMessage(ChatColor.GREEN + "Spawned.");
     }
 
     private void addOrSetItemInHand(Player player, ItemStack itemStack) {
-        if(player.getInventory().getItemInMainHand().getType() == Material.AIR) {
+        if (player.getInventory().getItemInMainHand().getType() == Material.AIR) {
             player.getInventory().setItemInMainHand(itemStack);
             return;
         }

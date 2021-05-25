@@ -2,7 +2,6 @@ package com.birthdates.videotominecraft.command.watch;
 
 import com.birthdates.videotominecraft.movie.Movie;
 import org.bukkit.ChatColor;
-import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 /**
@@ -14,14 +13,12 @@ public class WatchMovieCommand extends WatchCommand {
         super(true, "videotominecraft.watchmovie");
     }
 
-    protected void handleVideo(CommandSender sender, String framePath) {
-        Player player = (Player) sender;
-
+    protected void handleVideo(Player player, String framePath) {
         Movie movie;
         try {
             movie = new Movie(player.getLocation(), framePath);
         } catch (IllegalArgumentException ignored) {
-            sender.sendMessage(ChatColor.RED + "Failed to place the theatre!");
+            player.sendMessage(ChatColor.RED + "Failed to place the theatre!");
             return;
         }
 
