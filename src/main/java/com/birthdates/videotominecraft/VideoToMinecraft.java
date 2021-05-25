@@ -54,7 +54,7 @@ public class VideoToMinecraft extends JavaPlugin {
 
     private void createDataFolderIfNotExists() {
         File folder = getDataFolder();
-        if(folder.exists() || folder.mkdir()) return;
+        if (folder.exists() || folder.mkdir()) return;
         throw new IllegalStateException("Failed to create data folder.");
     }
 }

@@ -25,7 +25,7 @@ public class Movie {
     private final FrameWorker frameWorker;
     private final List<MovieBoard> boards = new ArrayList<>();
     private final List<IRemovable> toRemove = new ArrayList<>();
-    private int cacheNum = 0;
+    private int cacheNum = -1;
 
     public Movie(Location location, String folder) {
         frameWorker = new FrameWorker(folder);
@@ -68,8 +68,7 @@ public class Movie {
     }
 
     private void update(BufferedImage image) {
-        boolean cache = cacheNum != 0 && (cacheNum) % CACHE_SIZE != 0;
-        cacheNum++;
+        boolean cache = cacheNum++ != 0 && (cacheNum) % CACHE_SIZE != 0;
         if (!cache) cacheNum = 0; //prevent integer overflow
 
         for (MovieBoard board : boards) {
@@ -109,10 +108,9 @@ public class Movie {
 
         /**
          * Get our section of {@code bufferedImage}
-         * @param bufferedImage
-         * Target image
-         * @return
-         * An image of size {@code gridWith} by {@code gridHeight} (if scaled correctly in ffmpeg, should be 128x128)
+         *
+         * @param bufferedImage Target image
+         * @return An image of size {@code gridWith} by {@code gridHeight} (if scaled correctly in ffmpeg, should be 128x128)
          */
         private BufferedImage section(BufferedImage bufferedImage) {
             int gridWith = (bufferedImage.getWidth() / GRID_SIZE);

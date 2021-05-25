@@ -37,7 +37,7 @@ public class WatchCommand extends PlayerOnlyCommand {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (!super.onCommand(sender, command, label, args)) return false; //is not a player
 
-        if(!sender.hasPermission(permission)) {
+        if (!sender.hasPermission(permission)) {
             sender.sendMessage(ChatColor.RED + "You don't have permission to execute this command.");
             return false;
         }
