@@ -115,4 +115,8 @@ public class ExtractWorker extends Worker {
     private String scaleString(int res) {
         return res + ":" + res;
     }
+
+    public int getScore() {
+        return 2;
+    }
 }

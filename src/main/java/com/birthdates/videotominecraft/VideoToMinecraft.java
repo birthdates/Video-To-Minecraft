@@ -18,8 +18,7 @@ public class VideoToMinecraft extends JavaPlugin {
     @Getter
     private static VideoToMinecraft instance;
     private final long FPS = 15; //FPS for canvas
-    private final int WORKERS_PER_THREAD = 1;
-    private final ScheduledThreadPoolExecutor executorService = new WrappedScheduledThreadPoolExecutor(WORKERS_PER_THREAD);
+    private final ScheduledThreadPoolExecutor executorService = new WrappedScheduledThreadPoolExecutor(Worker.WORKERS_PER_THREAD);
 
     public void onEnable() {
         instance = this;
@@ -32,8 +31,8 @@ public class VideoToMinecraft extends JavaPlugin {
     }
 
     public void resizePool() {
-        int workerCount = Worker.getWorkers().size();
-        int neededThreads = workerCount / WORKERS_PER_THREAD;
+        int workerCount = Worker.getWorkerCount();
+        int neededThreads = workerCount / Worker.WORKERS_PER_THREAD;
 
         if (neededThreads == 0 || executorService.getCorePoolSize() == neededThreads) return;
         executorService.setCorePoolSize(neededThreads);

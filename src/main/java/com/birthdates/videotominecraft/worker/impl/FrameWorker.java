@@ -81,4 +81,8 @@ public class FrameWorker extends Worker {
         }
         return null;
     }
+
+    public int getScore() {
+        return 1;
+    }
 }

@@ -13,6 +13,7 @@ import java.util.concurrent.Future;
  */
 public abstract class Worker {
 
+    public static final int WORKERS_PER_THREAD = 2;
     @Getter
     private static final List<Worker> workers = new ArrayList<>();
     @Getter
@@ -38,4 +39,13 @@ public abstract class Worker {
         return true;
     }
 
+    public static int getWorkerCount() {
+        int output = 0;
+        for (Worker worker : workers) {
+            output += worker.getScore()*WORKERS_PER_THREAD;
+        }
+        return output;
+    }
+
+    public abstract int getScore();
 }
