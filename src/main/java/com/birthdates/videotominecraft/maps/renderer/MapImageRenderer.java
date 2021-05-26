@@ -28,6 +28,8 @@ public class MapImageRenderer extends MapRenderer {
     }
 
     public void sendToPlayer(Player player) {
+        if (bufferedImage == null)
+            return;
         player.sendMap(mapView);
     }
 
