@@ -44,17 +44,17 @@ public class MapImageRenderer extends MapRenderer {
         update();
     }
 
-    private boolean isImageInvalidSize() {
+    private boolean isImageInvalidSize(BufferedImage bufferedImage) {
         return bufferedImage != null && (bufferedImage.getWidth() != Maps.getResolution() || bufferedImage.getHeight() != Maps.getResolution());
     }
 
     private void rescaleImage() {
-        if (isImageInvalidSize())
+        if (isImageInvalidSize(bufferedImage))
             bufferedImage = getResizedImage(bufferedImage);
     }
 
     public BufferedImage getResizedImage(BufferedImage bufferedImage) {
-        return isImageInvalidSize() ? MapPalette.resizeImage(bufferedImage) : bufferedImage;
+        return isImageInvalidSize(bufferedImage) ? MapPalette.resizeImage(bufferedImage) : bufferedImage;
     }
 
     @Override
