@@ -1,6 +1,6 @@
 name: VideoToMinecraft
 author: birthdates
-version: 1.0.0
+version: 1.0.6
 main: com.birthdates.videotominecraft.VideoToMinecraft
 description: Project video onto a canvas
 api-version: 1.13
