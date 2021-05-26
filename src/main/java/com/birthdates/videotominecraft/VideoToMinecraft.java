@@ -17,7 +17,7 @@ public class VideoToMinecraft extends JavaPlugin {
 
     @Getter
     private static VideoToMinecraft instance;
-    private final int FPS = 15; //FPS for canvas
+    private final long FPS = 15; //FPS for canvas
     private final int WORKERS_PER_THREAD = 1;
     private final ScheduledThreadPoolExecutor executorService = new WrappedScheduledThreadPoolExecutor(WORKERS_PER_THREAD);
 

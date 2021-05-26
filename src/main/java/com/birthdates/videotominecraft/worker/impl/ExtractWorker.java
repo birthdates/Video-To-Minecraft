@@ -12,6 +12,7 @@ import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -83,7 +84,7 @@ public class ExtractWorker extends Worker {
         FrameWorker frameWorker = new FrameWorker(outputDir);
         AtomicInteger number = new AtomicInteger(1);
         try {
-            frameWorker.start(10, (bytes) -> {
+            frameWorker.start(1000L, (bytes) -> {
                 if (bytes == null)
                     return;
 
@@ -96,8 +97,9 @@ public class ExtractWorker extends Worker {
                 if (image == null)
                     return;
 
+                Path path = new File(outputDir + number.getAndIncrement() + ".jpeg").toPath();
                 try {
-                    Files.write(new File(outputDir + number.getAndIncrement() + ".jpeg").toPath(), MapPalette.imageToBytes(image));
+                    Files.write(path, MapPalette.imageToBytes(image));
                 } catch (IOException exception) {
                     exception.printStackTrace();
                 }

@@ -33,14 +33,14 @@ public class FrameWorker extends Worker {
     }
 
     public void start(Consumer<byte[]> callback, Runnable onFinish) {
-        start(1, callback, onFinish);
+        start(VideoToMinecraft.getInstance().getFPS(), callback, onFinish);
     }
 
-    public void start(int cacheSize, Consumer<byte[]> callback, Runnable onFinish) {
+    public void start(long fps, Consumer<byte[]> callback, Runnable onFinish) {
         this.callback = callback;
         this.onFinish = onFinish;
 
-        long delay = 1000L / ((long) VideoToMinecraft.getInstance().getFPS() * cacheSize); //how long between each frame (ms)
+        long delay = 1000L / fps; //how long between each frame (ms)
         AtomicInteger position = new AtomicInteger();
         int maxFrames = folderFile.listFiles().length; //how many frames were extracted
 
@@ -57,11 +57,7 @@ public class FrameWorker extends Worker {
                 return;
             }
 
-            try {
-                callback.accept(frame);
-            } catch (Exception exception) {
-                exception.printStackTrace();
-            }
+            callback.accept(frame);
         }, delay, delay, TimeUnit.MILLISECONDS);
         super.start();
     }

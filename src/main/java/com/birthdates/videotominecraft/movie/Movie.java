@@ -13,18 +13,15 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 public class Movie {
 
     public static final int GRID_SIZE = 5;
-    private static final int CACHE_SIZE = 1;
 
     private final FrameWorker frameWorker;
     private final List<MovieBoard> boards = new ArrayList<>();
     private final List<IRemovable> toRemove = new ArrayList<>();
-    private int cacheNum = 0;
 
     public Movie(Location location, String folder) {
         frameWorker = new FrameWorker(folder);
@@ -51,7 +48,7 @@ public class Movie {
     }
 
     public void start() {
-        frameWorker.start(CACHE_SIZE, this::update, this::stop);
+        frameWorker.start(this::update, this::stop);
     }
 
     public void stop() {
@@ -67,13 +64,9 @@ public class Movie {
     }
 
     private void update(byte[] image) {
-        boolean cache = cacheNum == 0 || cacheNum % CACHE_SIZE != 0;
-        if (!cache) cacheNum = 0; //prevent integer overflow
-        else cacheNum++;
         for (MovieBoard board : boards) {
-            board.update(image, cache);
+            board.update(image);
         }
-        if (cache) return;
 
         //update the board for each player
         for (Player player : Bukkit.getOnlinePlayers()) {
@@ -94,7 +87,6 @@ public class Movie {
     private class MovieBoard {
         private final MapImageRenderer renderer;
         private final int x, y;
-        private final LinkedList<byte[]> cache = new LinkedList<>();
 
         public MovieBoard(Location location, int x, int y) {
             renderer = new MapImageRenderer();
@@ -156,16 +148,11 @@ public class Movie {
             itemFrame.setItem(map);
         }
 
-        public void update(byte[] bufferedImage, boolean toCache) {
+        public void update(byte[] bufferedImage) {
             if (bufferedImage == null) {
                 return;
             }
-            if (toCache || cache.isEmpty()) {
-                byte[] resizedImage = section(bufferedImage);
-                cache.addLast(resizedImage); //resize here to save memory
-                return;
-            }
-            renderer.drawRawPixels(cache.removeFirst());
+            renderer.drawRawPixels(section(bufferedImage));
         }
     }
 }
