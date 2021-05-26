@@ -65,7 +65,7 @@ public class ExtractWorker extends Worker {
         Process process;
         try {
             process = Runtime.getRuntime().exec(command);
-            if (!process.waitFor(15, TimeUnit.SECONDS)) //this can affect the length of the video as it will stop the process
+            if (!process.waitFor(120, TimeUnit.SECONDS)) //this can affect the length of the video as it will stop the process
                 process.destroy();
         } catch (IOException | InterruptedException exception) {
             exception.printStackTrace();
