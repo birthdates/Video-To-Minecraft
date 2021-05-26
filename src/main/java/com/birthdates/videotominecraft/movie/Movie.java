@@ -18,8 +18,8 @@ import java.util.List;
 
 public class Movie {
 
-    public static final int GRID_SIZE = 3;
-    private static final int CACHE_SIZE = 2;
+    public static final int GRID_SIZE = 5;
+    private static final int CACHE_SIZE = 1;
 
     private final FrameWorker frameWorker;
     private final List<MovieBoard> boards = new ArrayList<>();

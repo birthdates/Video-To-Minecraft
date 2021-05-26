@@ -46,8 +46,8 @@ public class FrameWorker extends Worker {
 
         //receive frames at delay rate
         future = VideoToMinecraft.getInstance().getExecutorService().scheduleAtFixedRate(() -> {
-            int index;
-            if ((index = position.getAndIncrement()) >= maxFrames) {
+            int index = position.getAndIncrement();
+            if (index >= maxFrames) {
                 finish();
                 return;
             }
