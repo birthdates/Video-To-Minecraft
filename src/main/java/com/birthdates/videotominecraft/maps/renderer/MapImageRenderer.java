@@ -14,11 +14,7 @@ public class MapImageRenderer extends MapRenderer {
     private MapView mapView;
     private MapCanvas mapCanvas;
     private boolean imageDrawn;
-
-    private void drawn() {
-        imageDrawn = true;
-    }
-
+    
     /**
      * Draw raw pixels to the canvas
      *
@@ -30,7 +26,7 @@ public class MapImageRenderer extends MapRenderer {
                 mapCanvas.setPixel(x, y, pixels[y * Maps.getResolution() + x]);
             }
         }
-        drawn();
+        imageDrawn = true;
     }
 
     public void sendToPlayer(Player player) {

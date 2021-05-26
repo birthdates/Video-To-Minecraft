@@ -105,10 +105,9 @@ public class Movie {
 
         /**
          * Get the resolution of the square image from pixel array
-         * @param bytes
-         * Pixel array
-         * @return
-         * Resolution of pixel (i.e 256 for 256x256)
+         *
+         * @param bytes Pixel array
+         * @return Resolution of pixel (i.e 256 for 256x256)
          */
         private int getResolution(byte[] bytes) {
             return (int) Math.sqrt(bytes.length);

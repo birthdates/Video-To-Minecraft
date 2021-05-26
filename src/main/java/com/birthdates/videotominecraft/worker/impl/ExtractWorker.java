@@ -76,8 +76,8 @@ public class ExtractWorker extends Worker {
 
     /**
      * Transform the ffmpeg images into Minecraft colors to save a lot of performance (each transformation takes ~10-15 ms)
-     * @param callback
-     * Target callback
+     *
+     * @param callback Target callback
      */
     private void transformToMinecraftColors(Runnable callback) {
         FrameWorker frameWorker = new FrameWorker(outputDir);
