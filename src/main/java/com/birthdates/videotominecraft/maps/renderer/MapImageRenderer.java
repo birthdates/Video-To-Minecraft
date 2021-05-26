@@ -14,7 +14,7 @@ public class MapImageRenderer extends MapRenderer {
     private MapView mapView;
     private MapCanvas mapCanvas;
     private boolean imageDrawn;
-    
+
     /**
      * Draw raw pixels to the canvas
      *
