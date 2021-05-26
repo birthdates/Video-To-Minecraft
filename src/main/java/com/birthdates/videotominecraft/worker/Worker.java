@@ -23,6 +23,14 @@ public abstract class Worker {
     protected Future<?> future;
     private boolean finished;
 
+    public static int getWorkerCount() {
+        int output = 0;
+        for (Worker worker : workers) {
+            output += worker.getScore() * WORKERS_PER_THREAD;
+        }
+        return output;
+    }
+
     protected void start() {
         workers.add(this);
         VideoToMinecraft.getInstance().resizePool();
@@ -37,14 +45,6 @@ public abstract class Worker {
         workers.remove(this);
         VideoToMinecraft.getInstance().resizePool();
         return true;
-    }
-
-    public static int getWorkerCount() {
-        int output = 0;
-        for (Worker worker : workers) {
-            output += worker.getScore()*WORKERS_PER_THREAD;
-        }
-        return output;
     }
 
     public abstract int getScore();
