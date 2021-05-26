@@ -14,7 +14,6 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import java.awt.image.BufferedImage;
 import java.io.File;
 
 /**
@@ -93,8 +92,8 @@ public class WatchCommand extends PlayerOnlyCommand {
         player.sendMessage(ChatColor.GREEN + "Video complete.");
     }
 
-    private void renderAndSendToPlayer(BufferedImage bufferedImage, Player player, MapImageRenderer imageRenderer) {
-        imageRenderer.setBufferedImage(bufferedImage);
+    private void renderAndSendToPlayer(byte[] bufferedImage, Player player, MapImageRenderer imageRenderer) {
+        imageRenderer.drawRawPixels(bufferedImage);
         imageRenderer.sendToPlayer(player);
     }
 }

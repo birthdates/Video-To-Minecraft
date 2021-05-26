@@ -1,7 +1,5 @@
 package com.birthdates.videotominecraft.executor;
 
-import java.util.concurrent.CancellationException;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 
@@ -23,7 +21,7 @@ public class WrappedScheduledThreadPoolExecutor extends ScheduledThreadPoolExecu
                 Future<?> future = (Future<?>) runnable;
                 if (future.isDone())
                     future.get();
-            } catch (CancellationException | ExecutionException | InterruptedException exception) {
+            } catch (Exception exception) {
                 throwable = exception;
             }
         }

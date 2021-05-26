@@ -12,14 +12,13 @@ import org.bukkit.entity.ItemFrame;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
 public class Movie {
 
-    public static final int GRID_SIZE = 2;
+    public static final int GRID_SIZE = 3;
     private static final int CACHE_SIZE = 2;
 
     private final FrameWorker frameWorker;
@@ -67,13 +66,12 @@ public class Movie {
         }
     }
 
-    private void update(BufferedImage image) {
+    private void update(byte[] image) {
         boolean cache = cacheNum == 0 || cacheNum % CACHE_SIZE != 0;
         if (!cache) cacheNum = 0; //prevent integer overflow
         else cacheNum++;
         for (MovieBoard board : boards) {
             board.update(image, cache);
-            if (!cache) board.renderer.update();
         }
         if (cache) return;
 
@@ -96,7 +94,7 @@ public class Movie {
     private class MovieBoard {
         private final MapImageRenderer renderer;
         private final int x, y;
-        private final LinkedList<BufferedImage> cache = new LinkedList<>();
+        private final LinkedList<byte[]> cache = new LinkedList<>();
 
         public MovieBoard(Location location, int x, int y) {
             renderer = new MapImageRenderer();
@@ -106,18 +104,37 @@ public class Movie {
         }
 
         /**
-         * Get our section of {@code bufferedImage}
+         * Get the resolution of the square image from pixel array
+         * @param bytes
+         * Pixel array
+         * @return
+         * Resolution of pixel (i.e 256 for 256x256)
+         */
+        private int getResolution(byte[] bytes) {
+            return (int) Math.sqrt(bytes.length);
+        }
+
+        /**
+         * Get our section of {@code bytes}
          *
-         * @param bufferedImage Target image
+         * @param bytes Target image
          * @return An image of size {@code gridWith} by {@code gridHeight} (if scaled correctly in ffmpeg, should be 128x128)
          */
-        private BufferedImage section(BufferedImage bufferedImage) {
-            int gridWith = (bufferedImage.getWidth() / GRID_SIZE);
-            int gridHeight = (bufferedImage.getHeight() / GRID_SIZE);
+        private byte[] section(byte[] bytes) {
+            int size = getResolution(bytes);
+            int gridWith = (size / GRID_SIZE);
+            int gridHeight = (size / GRID_SIZE);
             int x = this.x * gridWith;
             int y = this.y * gridHeight;
+            byte[] output = new byte[Maps.getResolution() * Maps.getResolution()];
 
-            return bufferedImage.getSubimage(x - gridWith, y, gridWith, gridHeight);
+            for (int x2 = x; x2 < x + gridWith; ++x2) {
+                for (int y2 = y; y2 < y + gridHeight; ++y2) {
+                    output[(y2 - y) * Maps.getResolution() + (x2 - x)] = bytes[y2 * size + (x2 - gridWith)];
+                }
+            }
+
+            return output;
         }
 
         private void spawnMap(Location location) {
@@ -140,15 +157,16 @@ public class Movie {
             itemFrame.setItem(map);
         }
 
-        public void update(BufferedImage bufferedImage, boolean toCache) {
+        public void update(byte[] bufferedImage, boolean toCache) {
             if (bufferedImage == null) {
                 return;
             }
             if (toCache || cache.isEmpty()) {
-                cache.addLast(renderer.getResizedImage(section(bufferedImage))); //resize here to save memory
+                byte[] resizedImage = section(bufferedImage);
+                cache.addLast(resizedImage); //resize here to save memory
                 return;
             }
-            renderer.setBufferedImage(cache.removeFirst(), false);
+            renderer.drawRawPixels(cache.removeFirst());
         }
     }
 }

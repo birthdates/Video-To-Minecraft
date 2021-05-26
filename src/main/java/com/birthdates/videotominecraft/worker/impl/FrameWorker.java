@@ -4,10 +4,10 @@ import com.birthdates.videotominecraft.VideoToMinecraft;
 import com.birthdates.videotominecraft.worker.Worker;
 import org.jetbrains.annotations.Nullable;
 
-import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Consumer;
@@ -19,7 +19,7 @@ public class FrameWorker extends Worker {
 
     private final File folderFile;
     @Nullable
-    private Consumer<BufferedImage> callback;
+    private Consumer<byte[]> callback;
     @Nullable
     private Runnable onFinish;
 
@@ -32,11 +32,11 @@ public class FrameWorker extends Worker {
         folderFile = new File(folder);
     }
 
-    public void start(Consumer<BufferedImage> callback, Runnable onFinish) {
+    public void start(Consumer<byte[]> callback, Runnable onFinish) {
         start(1, callback, onFinish);
     }
 
-    public void start(int cacheSize, Consumer<BufferedImage> callback, Runnable onFinish) {
+    public void start(int cacheSize, Consumer<byte[]> callback, Runnable onFinish) {
         this.callback = callback;
         this.onFinish = onFinish;
 
@@ -52,12 +52,16 @@ public class FrameWorker extends Worker {
                 return;
             }
 
-            BufferedImage frame = readFrame(folderFile, index);
+            byte[] frame = readFrame(folderFile, index);
             if (frame == null) {
                 return;
             }
 
-            callback.accept(frame);
+            try {
+                callback.accept(frame);
+            } catch (Exception exception) {
+                exception.printStackTrace();
+            }
         }, delay, delay, TimeUnit.MILLISECONDS);
         super.start();
     }
@@ -70,12 +74,12 @@ public class FrameWorker extends Worker {
         return true;
     }
 
-    private BufferedImage readFrame(File folder, int position) {
+    private byte[] readFrame(File folder, int position) {
         File file = new File(folder, position + 1 + ".jpeg");
         if (!file.exists()) return null;
 
         try {
-            return ImageIO.read(file);
+            return Files.readAllBytes(file.toPath());
         } catch (IOException exception) {
             exception.printStackTrace();
         }
