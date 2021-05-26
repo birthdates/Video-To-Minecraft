@@ -25,7 +25,7 @@ public class Movie {
     private final FrameWorker frameWorker;
     private final List<MovieBoard> boards = new ArrayList<>();
     private final List<IRemovable> toRemove = new ArrayList<>();
-    private int cacheNum = -1;
+    private int cacheNum = 0;
 
     public Movie(Location location, String folder) {
         frameWorker = new FrameWorker(folder);
@@ -68,9 +68,9 @@ public class Movie {
     }
 
     private void update(BufferedImage image) {
-        boolean cache = cacheNum++ != 0 && (cacheNum) % CACHE_SIZE != 0;
+        boolean cache = cacheNum == 0 || cacheNum % CACHE_SIZE != 0;
         if (!cache) cacheNum = 0; //prevent integer overflow
-
+        else cacheNum++;
         for (MovieBoard board : boards) {
             board.update(image, cache);
             if (!cache) board.renderer.update();
