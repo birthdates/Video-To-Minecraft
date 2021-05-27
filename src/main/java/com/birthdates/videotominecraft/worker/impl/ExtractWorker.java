@@ -97,10 +97,10 @@ public class ExtractWorker extends Worker {
                 }
                 if (image == null)
                     return;
+
                 byte[] imageBytes = MapPalette.imageToBytes(image);
                 Path path = new File(outputDir + number.getAndIncrement() + ".jpeg").toPath();
                 try {
-
                     Files.write(path, Compression.compress(imageBytes));
                 } catch (IOException exception) {
                     exception.printStackTrace();

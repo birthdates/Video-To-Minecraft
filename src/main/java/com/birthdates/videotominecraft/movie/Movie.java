@@ -15,6 +15,9 @@ import org.bukkit.inventory.ItemStack;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Class to watch a video on multiple maps
+ */
 public class Movie {
 
     public static final int GRID_SIZE = 5;
