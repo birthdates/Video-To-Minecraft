@@ -8,6 +8,9 @@ import java.io.IOException;
 import java.util.zip.DeflaterOutputStream;
 import java.util.zip.InflaterOutputStream;
 
+/**
+ * Class used to compress & decompress large files
+ */
 @UtilityClass
 public class Compression {
 

@@ -26,7 +26,7 @@ public abstract class Worker {
     public static int getWorkerCount() {
         int output = 0;
         for (Worker worker : workers) {
-            output += worker.getScore() * WORKERS_PER_THREAD;
+            output += worker.getScore();
         }
         return output;
     }
@@ -47,5 +47,10 @@ public abstract class Worker {
         return true;
     }
 
+    /**
+     * Used for thread count
+     *
+     * @return The score for intensity (2 = 2 threads)
+     */
     public abstract int getScore();
 }
