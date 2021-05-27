@@ -5,7 +5,6 @@ import com.birthdates.videotominecraft.compression.Compression;
 import com.birthdates.videotominecraft.worker.Worker;
 import org.jetbrains.annotations.Nullable;
 
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -14,7 +13,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Consumer;
 
 /**
- * Frame worker that relays frames to a {@link Consumer<BufferedImage>} at a certain delay
+ * Frame worker that relays frames at a certain delay
  */
 public class FrameWorker extends Worker {
 

@@ -18,7 +18,7 @@ public class MapImageRenderer extends MapRenderer {
     /**
      * Draw raw pixels to the canvas
      *
-     * @param pixels 128x128 pixel array
+     * @param pixels {@link Maps#getResolution()}x{@link Maps#getResolution()} pixel array
      */
     public void drawRawPixels(byte[] pixels) {
         for (int x = 0; x < Maps.getResolution(); ++x) {

@@ -49,8 +49,9 @@ public class ExtractWorker extends Worker {
                 callback.run();
                 return; //already extracted this video
             }
+        } else if (!outputDirFile.mkdirs()) {
+            throw new IllegalStateException("Failed to create folder \"" + outputDir + "\"");
         }
-        outputDirFile.mkdirs();
 
         int mapRes = Maps.getResolution();
         int movieRes = mapRes * Movie.GRID_SIZE;
