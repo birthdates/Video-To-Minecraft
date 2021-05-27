@@ -116,15 +116,14 @@ public class Movie {
          */
         private byte[] section(byte[] bytes) {
             int size = getResolution(bytes);
-            int gridWith = (size / GRID_SIZE);
-            int gridHeight = (size / GRID_SIZE);
-            int x = this.x * gridWith;
-            int y = this.y * gridHeight;
+            int gridSize = size / GRID_SIZE;
+            int x = this.x * gridSize;
+            int y = this.y * gridSize;
             byte[] output = new byte[Maps.getResolution() * Maps.getResolution()];
 
-            for (int x2 = x; x2 < x + gridWith; ++x2) {
-                for (int y2 = y; y2 < y + gridHeight; ++y2) {
-                    output[(y2 - y) * Maps.getResolution() + (x2 - x)] = bytes[y2 * size + (x2 - gridWith)];
+            for (int x2 = x; x2 < x + gridSize; ++x2) {
+                for (int y2 = y; y2 < y + gridSize; ++y2) {
+                    output[(y2 - y) * Maps.getResolution() + (x2 - x)] = bytes[y2 * size + (x2 - gridSize)];
                 }
             }
 
