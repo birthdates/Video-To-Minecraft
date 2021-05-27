@@ -18,5 +18,5 @@ This plugin targets the 1.16 Bukkit API
 
 # Next Steps
 
-* Cache system
+* Configuration
 * Resource pack server to host a templated pack with audio

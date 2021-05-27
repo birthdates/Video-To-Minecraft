@@ -55,7 +55,7 @@ public class VideoToMinecraft extends JavaPlugin {
     }
 
     private void stopWorkers() {
-        for (int i = Worker.getWorkers().size() - 1; i >= 0; i--) { //loop in reverse to prevent CME
+        for (int i = Worker.getWorkers().size() - 1; i >= 0; --i) { //loop in reverse to prevent CME
             Worker worker = Worker.getWorkers().get(i);
             worker.finish();
         }

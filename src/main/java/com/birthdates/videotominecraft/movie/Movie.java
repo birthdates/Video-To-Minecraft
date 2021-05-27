@@ -32,8 +32,8 @@ public class Movie {
     }
 
     public void populateBoards(Location location) {
-        for (int i = 0; i < GRID_SIZE; i++) {
-            for (int j = GRID_SIZE; j > 0; j--) {
+        for (int i = 0; i < GRID_SIZE; ++i) {
+            for (int j = GRID_SIZE; j > 0; --j) {
                 Location boardLocation = location.clone().add(GRID_SIZE - i, GRID_SIZE - j, 0); //TODO: fix that you have to be looking south
                 testInvalidLocation(boardLocation);
 
