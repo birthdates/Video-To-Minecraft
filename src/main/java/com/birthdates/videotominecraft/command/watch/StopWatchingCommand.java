@@ -31,6 +31,8 @@ public class StopWatchingCommand extends PlayerOnlyCommand {
     }
 
     private boolean removeMapAndWorker(Player player, ItemStack[] contents) {
+        if(contents == null)
+            return false;
         boolean found = false;
         for (ItemStack content : contents) {
             if (content == null || !content.hasItemMeta() ||

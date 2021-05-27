@@ -10,7 +10,7 @@ This plugin targets the 1.16 Bukkit API
   plays it on a map item *(requires `videotominecraft.watch` permission)*
 * `/watchmovie <video>` - This command does the same as `/watch` however, it uses item frames and multiple maps to
   increase the resolution of your video *(requires `videotominecraft.watchmovie` permission)*
-
+* `/stopwatching` - This command allows you to stop watching a video (only with `/watch`)
 # Known Issues
 
 * You have to be looking south to spawn a movie theatre correctly
