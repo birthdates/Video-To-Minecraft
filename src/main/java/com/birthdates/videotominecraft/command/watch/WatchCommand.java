@@ -62,6 +62,7 @@ public class WatchCommand extends PlayerOnlyCommand {
         String outputDir = VideoToMinecraft.getInstance().getDataFolder() + "/frames/" + newId + "/";
         sender.sendMessage(ChatColor.GREEN + "Extracting...");
 
+        //start extracting each frame for the video
         ExtractWorker extractor = new ExtractWorker(file, outputDir);
         extractor.start(rotate, () -> handleVideo((Player) sender, outputDir));
         return true;
