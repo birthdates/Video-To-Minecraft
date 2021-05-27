@@ -24,7 +24,7 @@ This plugin targets the 1.16 Bukkit API
 # Video
 
 ## Maps
-[![](https://i.gyazo.com/b7d53ad997e13dc26f22733ae2192ba0.gif)](https://gyazo.com/b7d53ad997e13dc26f22733ae2192ba0)
+![](previews/map.gif)
 
 ## Movies
-[![](https://i.gyazo.com/8e0518da57c259716fafbcfeafea289e.gif)](https://gyazo.com/8e0518da57c259716fafbcfeafea289e)
+![](previews/movies.gif)
