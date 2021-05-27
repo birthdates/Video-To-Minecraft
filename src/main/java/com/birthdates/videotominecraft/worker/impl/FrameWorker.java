@@ -1,6 +1,7 @@
 package com.birthdates.videotominecraft.worker.impl;
 
 import com.birthdates.videotominecraft.VideoToMinecraft;
+import com.birthdates.videotominecraft.compression.Compression;
 import com.birthdates.videotominecraft.worker.Worker;
 import org.jetbrains.annotations.Nullable;
 
@@ -33,10 +34,10 @@ public class FrameWorker extends Worker {
     }
 
     public void start(Consumer<byte[]> callback, Runnable onFinish) {
-        start(VideoToMinecraft.getInstance().getFPS(), callback, onFinish);
+        start(VideoToMinecraft.getInstance().getFPS(), true, callback, onFinish);
     }
 
-    public void start(long fps, Consumer<byte[]> callback, Runnable onFinish) {
+    public void start(long fps, boolean decompress, Consumer<byte[]> callback, Runnable onFinish) {
         this.callback = callback;
         this.onFinish = onFinish;
 
@@ -56,7 +57,11 @@ public class FrameWorker extends Worker {
             if (frame == null) {
                 return;
             }
-
+            if (decompress) {
+                frame = Compression.decompress(frame);
+                if (frame == null)
+                    return;
+            }
             callback.accept(frame);
         }, delay, delay, TimeUnit.MILLISECONDS);
         super.start();

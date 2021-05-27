@@ -1,6 +1,7 @@
 package com.birthdates.videotominecraft.worker.impl;
 
 import com.birthdates.videotominecraft.VideoToMinecraft;
+import com.birthdates.videotominecraft.compression.Compression;
 import com.birthdates.videotominecraft.maps.Maps;
 import com.birthdates.videotominecraft.movie.Movie;
 import com.birthdates.videotominecraft.worker.Worker;
@@ -84,7 +85,7 @@ public class ExtractWorker extends Worker {
         FrameWorker frameWorker = new FrameWorker(outputDir);
         AtomicInteger number = new AtomicInteger(1);
         try {
-            frameWorker.start(1000L, (bytes) -> {
+            frameWorker.start(1000L, false, (bytes) -> {
                 if (bytes == null)
                     return;
 
@@ -96,10 +97,11 @@ public class ExtractWorker extends Worker {
                 }
                 if (image == null)
                     return;
-
+                byte[] imageBytes = MapPalette.imageToBytes(image);
                 Path path = new File(outputDir + number.getAndIncrement() + ".jpeg").toPath();
                 try {
-                    Files.write(path, MapPalette.imageToBytes(image));
+
+                    Files.write(path, Compression.compress(imageBytes));
                 } catch (IOException exception) {
                     exception.printStackTrace();
                 }
