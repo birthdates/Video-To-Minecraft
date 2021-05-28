@@ -34,7 +34,8 @@ public class ExtractWorker extends Worker {
 
     public void start(boolean rotate, Runnable callback) {
         super.start();
-        future = VideoToMinecraft.getInstance().getExecutorService().submit(() -> work(rotate, () -> VideoToMinecraft.getInstance().postToMainThread(callback)));
+        Runnable toMainThread = () -> VideoToMinecraft.getInstance().postToMainThread(callback);
+        future = VideoToMinecraft.getInstance().getExecutorService().submit(() -> work(rotate, toMainThread));
     }
 
     public void work(boolean rotate, Runnable callback) {
@@ -57,8 +58,8 @@ public class ExtractWorker extends Worker {
         String command = ffmpegExtractCommand
                 .replace("{0}", file.getAbsolutePath()) //input
                 .replace("{1}", String.valueOf(VideoToMinecraft.getInstance().getFPS()))
-                .replace("{2}", rotate ?
-                        "rotate=PI+(PI/2),scale=" + scaleString(movieRes)
+                .replace("{2}", rotate ? //rotate 270 degrees to make it straight on blocks
+                        "rotate=PI+(PI/2),scale=" + scaleString(movieRes) //scale for performance when transforming colors & in-game
                         : "scale=" + scaleString(mapRes) + ",setsar=1:1") //do calculations in ffmpeg instead of live
                 .replace("{3}", outputDir);
         //run command & wait
