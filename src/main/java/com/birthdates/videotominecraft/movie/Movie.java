@@ -19,8 +19,10 @@ import java.util.List;
  * Class to watch a video on multiple maps
  */
 public class Movie {
+    
+    private final static int gridSizeSquared = VideoToMinecraft.getInstance().getConfiguration().getGridSize() * VideoToMinecraft.getInstance().getConfiguration().getGridSize();
     private final FrameWorker frameWorker;
-    private final MovieBoard[] boards = new MovieBoard[VideoToMinecraft.getInstance().getConfiguration().getGridSize()*VideoToMinecraft.getInstance().getConfiguration().getGridSize()];
+    private final MovieBoard[] boards = new MovieBoard[gridSizeSquared];
     private final List<IRemovable> toRemove = new ArrayList<>();
 
     public Movie(Location location, String folder) {
