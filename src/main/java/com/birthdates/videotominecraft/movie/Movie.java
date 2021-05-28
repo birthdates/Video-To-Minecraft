@@ -20,7 +20,7 @@ import java.util.List;
  */
 public class Movie {
     private final FrameWorker frameWorker;
-    private final List<MovieBoard> boards = new ArrayList<>();
+    private final MovieBoard[] boards = new MovieBoard[VideoToMinecraft.getInstance().getConfiguration().getGridSize()*VideoToMinecraft.getInstance().getConfiguration().getGridSize()];
     private final List<IRemovable> toRemove = new ArrayList<>();
 
     public Movie(Location location, String folder) {
@@ -30,14 +30,17 @@ public class Movie {
 
     public void populateBoards(Location location) {
         int gridSize = VideoToMinecraft.getInstance().getConfiguration().getGridSize();
+
+        int index = 0;
         for (int i = 0; i < gridSize; ++i) {
-            for (int j = gridSize; j > 0; --j) {
-                Location boardLocation = location.clone().add(gridSize - i, gridSize - j, 0); //TODO: fix that you have to be looking south
+            for (int j = gridSize; j > 0; --j, index++) {
+                //TODO: fix that you have to be looking south
+                Location boardLocation = location.clone().add(gridSize - i, gridSize - j, 0);
                 testInvalidLocation(boardLocation);
 
                 addToRemove(new BlockRemovable(boardLocation));
                 MovieBoard movieBoard = new MovieBoard(boardLocation, j, i);
-                boards.add(movieBoard);
+                boards[index] = movieBoard;
             }
         }
     }
