@@ -23,9 +23,7 @@ public class VideoToMinecraft extends JavaPlugin {
     private Configuration configuration;
 
     public void onEnable() {
-        if (!checkForFFMPEG()) {
-            throw new IllegalStateException("FFMPEG not in path!");
-        }
+        checkForFFMPEG();
         instance = this;
         configuration = new Configuration();
         createDataFolderIfNotExists();
@@ -64,14 +62,13 @@ public class VideoToMinecraft extends JavaPlugin {
         throw new IllegalStateException("Failed to create data folder.");
     }
 
-    private boolean checkForFFMPEG() {
+    private void checkForFFMPEG() {
         try {
             Process process = Runtime.getRuntime().exec("ffmpeg");
             process.destroy();
         } catch (IOException ignored) {
-            return false;
+            throw new IllegalStateException("FFMPEG not in path!");
         }
-        return true;
     }
 
     private void stopWorkers() {
