@@ -119,13 +119,14 @@ public class Movie {
             int y = this.y * gridSize;
             byte[] output = new byte[Maps.getResolution() * Maps.getResolution()];
 
+            /*
+             * This sets the corresponding pixel of output from bytes.
+             * i.e if we're x,y (1,1) and the grid size is 2 (meaning bytes is of size 256*256),
+             * we will get a 128x128 section in the top right of the image (128-256, 128-256) -> (0-128, 0-128)
+             */
             for (int x2 = x; x2 < x + gridSize; ++x2) {
                 for (int y2 = y; y2 < y + gridSize; ++y2) {
-                    /*
-                     * This sets the corresponding pixel of output from bytes.
-                     * i.e if we're x,y (1,1) and the grid size is 2 (meaning bytes is of size 256*256),
-                     * we will get a 128x128 section in the top right of the image (128-256, 128-256)
-                     */
+                    //i.e if size is 256 & we are at x 256, the output index would be x 128
                     output[(y2 - y) * Maps.getResolution() + (x2 - x)] = bytes[y2 * size + (x2 - gridSize)];
                 }
             }
