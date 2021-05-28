@@ -62,6 +62,9 @@ public class VideoToMinecraft extends JavaPlugin {
         throw new IllegalStateException("Failed to create data folder.");
     }
 
+    /**
+     * Checks if the ffmpeg cli can be found in the path by executing it (it will throw an error if not found)
+     */
     private void checkForFFMPEG() {
         try {
             Process process = Runtime.getRuntime().exec("ffmpeg");
