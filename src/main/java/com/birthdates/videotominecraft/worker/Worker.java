@@ -23,8 +23,8 @@ public abstract class Worker {
     protected Future<?> future;
     private boolean finished;
 
-    public static int getWorkerCount() {
-        int output = 0;
+    public static double getWorkersScore() {
+        double output = 0;
         for (Worker worker : workers) {
             output += worker.getScore();
         }
@@ -52,5 +52,5 @@ public abstract class Worker {
      *
      * @return The score for intensity (2 = 2 threads)
      */
-    public abstract int getScore();
+    public abstract double getScore();
 }

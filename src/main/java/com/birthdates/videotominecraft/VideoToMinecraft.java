@@ -31,8 +31,8 @@ public class VideoToMinecraft extends JavaPlugin {
     }
 
     public void resizePool() {
-        int workerCount = Worker.getWorkerCount();
-        int neededThreads = workerCount / Worker.WORKERS_PER_THREAD;
+        double workersScore = Worker.getWorkersScore();
+        int neededThreads = (int) (workersScore / Worker.WORKERS_PER_THREAD);
 
         if (neededThreads == 0 || executorService.getCorePoolSize() == neededThreads) return;
         executorService.setCorePoolSize(neededThreads);

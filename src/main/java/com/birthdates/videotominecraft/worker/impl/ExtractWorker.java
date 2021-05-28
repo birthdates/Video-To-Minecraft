@@ -84,6 +84,7 @@ public class ExtractWorker extends Worker {
         FrameWorker frameWorker = new FrameWorker(outputDir);
         AtomicInteger number = new AtomicInteger(1);
         try {
+            //start reading all the ffmpeg generated frames at 1000 FPS (1ms delay)
             frameWorker.start(1000L, false, (bytes) -> {
                 if (bytes == null)
                     return;
@@ -97,6 +98,7 @@ public class ExtractWorker extends Worker {
                 if (image == null)
                     return;
 
+                //imageToBytes not only converts the image to bytes, it also changes the colors to the nearest minecraft color
                 byte[] imageBytes = MapPalette.imageToBytes(image);
                 Path path = new File(outputDir + number.getAndIncrement() + ".jpeg").toPath();
                 try {
@@ -117,7 +119,7 @@ public class ExtractWorker extends Worker {
         return res + ":" + res;
     }
 
-    public int getScore() {
-        return 2;
+    public double getScore() {
+        return 2D;
     }
 }
