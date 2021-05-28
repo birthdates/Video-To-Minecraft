@@ -99,7 +99,11 @@ public class ExtractWorker extends Worker {
                 if (image == null)
                     return;
 
-                //imageToBytes not only converts the image to bytes, it also changes the colors to the nearest minecraft color
+                /*
+                 * imageToBytes not only converts the image to bytes, it also changes the colors to the nearest minecraft color
+                 * However, this method is so slow to where this calculation has to be baked.
+                 * You could make your own method of converting the image to bytes & colors to minecraft colors as the Bukkit method can do with some improvements, however, most of their methods are private and would require reflection.
+                 */
                 byte[] imageBytes = MapPalette.imageToBytes(image);
                 Path path = new File(outputDir + number.getAndIncrement() + ".jpeg").toPath();
                 try {
