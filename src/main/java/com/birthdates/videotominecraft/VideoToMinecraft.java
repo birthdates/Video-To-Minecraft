@@ -3,6 +3,7 @@ package com.birthdates.videotominecraft;
 import com.birthdates.videotominecraft.command.watch.StopWatchingCommand;
 import com.birthdates.videotominecraft.command.watch.WatchCommand;
 import com.birthdates.videotominecraft.command.watch.WatchMovieCommand;
+import com.birthdates.videotominecraft.configuration.Configuration;
 import com.birthdates.videotominecraft.executor.WrappedScheduledThreadPoolExecutor;
 import com.birthdates.videotominecraft.worker.Worker;
 import lombok.Getter;
@@ -17,11 +18,12 @@ public class VideoToMinecraft extends JavaPlugin {
 
     @Getter
     private static VideoToMinecraft instance;
-    private final long FPS = 15; //FPS for canvas
     private final ScheduledThreadPoolExecutor executorService = new WrappedScheduledThreadPoolExecutor(Worker.WORKERS_PER_THREAD);
+    private Configuration configuration;
 
     public void onEnable() {
         instance = this;
+        configuration = new Configuration();
         createDataFolderIfNotExists();
         registerCommands();
     }
@@ -46,6 +48,10 @@ public class VideoToMinecraft extends JavaPlugin {
         getCommand("watch").setExecutor(new WatchCommand());
         getCommand("stopwatching").setExecutor(new StopWatchingCommand());
         getCommand("watchmovie").setExecutor(new WatchMovieCommand());
+    }
+
+    public long getFPS() {
+        return configuration.getFps();
     }
 
     private void createDataFolderIfNotExists() {

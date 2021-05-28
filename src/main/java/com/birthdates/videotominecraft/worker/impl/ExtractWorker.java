@@ -52,7 +52,7 @@ public class ExtractWorker extends Worker {
         }
 
         int mapRes = Maps.getResolution();
-        int movieRes = mapRes * Movie.GRID_SIZE;
+        int movieRes = mapRes * VideoToMinecraft.getInstance().getConfiguration().getGridSize();
 
         //format command
         String command = ffmpegExtractCommand
@@ -77,6 +77,7 @@ public class ExtractWorker extends Worker {
 
     /**
      * Transform the ffmpeg images into Minecraft colors to save a lot of performance (each transformation takes ~10-15 ms)
+     * This operation is irreversible.
      *
      * @param callback Target callback
      */

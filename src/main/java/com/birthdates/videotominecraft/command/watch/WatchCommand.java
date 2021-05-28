@@ -61,7 +61,7 @@ public class WatchCommand extends PlayerOnlyCommand {
         ID used for the output directory (i.e rotated-5-videoname-20)
         Use fps to ensure the correct framerate & grid size to ensure correct resolution
          */
-        String newId = (rotate ? "rotated-" + Movie.GRID_SIZE + "-" : "") + id + "-" + VideoToMinecraft.getInstance().getFPS();
+        String newId = (rotate ? "rotated-" + VideoToMinecraft.getInstance().getConfiguration().getGridSize() + "-" : "") + id + "-" + VideoToMinecraft.getInstance().getFPS();
         String outputDir = VideoToMinecraft.getInstance().getDataFolder() + "/frames/" + newId + "/";
         sender.sendMessage(ChatColor.GREEN + "Extracting...");
 

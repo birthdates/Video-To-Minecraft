@@ -19,9 +19,6 @@ import java.util.List;
  * Class to watch a video on multiple maps
  */
 public class Movie {
-
-    public static final int GRID_SIZE = 5;
-
     private final FrameWorker frameWorker;
     private final List<MovieBoard> boards = new ArrayList<>();
     private final List<IRemovable> toRemove = new ArrayList<>();
@@ -32,9 +29,10 @@ public class Movie {
     }
 
     public void populateBoards(Location location) {
-        for (int i = 0; i < GRID_SIZE; ++i) {
-            for (int j = GRID_SIZE; j > 0; --j) {
-                Location boardLocation = location.clone().add(GRID_SIZE - i, GRID_SIZE - j, 0); //TODO: fix that you have to be looking south
+        int gridSize = VideoToMinecraft.getInstance().getConfiguration().getGridSize();
+        for (int i = 0; i < gridSize; ++i) {
+            for (int j = gridSize; j > 0; --j) {
+                Location boardLocation = location.clone().add(gridSize - i, gridSize - j, 0); //TODO: fix that you have to be looking south
                 testInvalidLocation(boardLocation);
 
                 addToRemove(new BlockRemovable(boardLocation));
@@ -116,7 +114,7 @@ public class Movie {
          */
         private byte[] section(byte[] bytes) {
             int size = getResolution(bytes);
-            int gridSize = size / GRID_SIZE;
+            int gridSize = size / VideoToMinecraft.getInstance().getConfiguration().getGridSize();
             int x = this.x * gridSize;
             int y = this.y * gridSize;
             byte[] output = new byte[Maps.getResolution() * Maps.getResolution()];
