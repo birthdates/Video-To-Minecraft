@@ -23,7 +23,7 @@ public class VideoToMinecraft extends JavaPlugin {
     private Configuration configuration;
 
     public void onEnable() {
-        if(!checkForFFMPEG()) {
+        if (!checkForFFMPEG()) {
             throw new IllegalStateException("FFMPEG not in path!");
         }
         instance = this;
@@ -68,7 +68,7 @@ public class VideoToMinecraft extends JavaPlugin {
         try {
             Process process = Runtime.getRuntime().exec("ffmpeg");
             process.destroy();
-        } catch(IOException ignored) {
+        } catch (IOException ignored) {
             return false;
         }
         return true;

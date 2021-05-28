@@ -5,6 +5,7 @@ This plugin is meant to read video files and allow you to watch it in minecraft 
 This plugin targets the 1.16 Bukkit API
 
 # Prerequisites
+
 * FFMPEG installed to your path
 
 # Commands
