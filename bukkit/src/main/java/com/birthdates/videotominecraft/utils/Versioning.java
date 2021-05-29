@@ -32,6 +32,6 @@ public class Versioning {
 
     @AllArgsConstructor
     private static class Version {
-        private final int minor; //major & patch is useless in this case
+        private final int minor; //major & patch is useless in our case
     }
 }
