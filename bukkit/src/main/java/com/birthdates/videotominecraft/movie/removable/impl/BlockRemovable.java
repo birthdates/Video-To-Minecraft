@@ -19,6 +19,12 @@ public class BlockRemovable extends IRemovable {
         getLocation().getBlock().setType(Material.AIR);
     }
 
+    /**
+     * Override equals as {@link Location#equals(Object)} looks at the exact location
+     * However we only need the block location
+     * @param other Object to compare to
+     * @return If {@code other} is equal to {@link object}
+     */
     @Override
     public boolean equals(Object other) {
         if (super.equals(other)) return true;

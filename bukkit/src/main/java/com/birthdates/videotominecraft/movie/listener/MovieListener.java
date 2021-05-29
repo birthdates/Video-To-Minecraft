@@ -9,6 +9,9 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 
+/**
+ * Class to cancel certain events responsible for disrupting a movie theatre!
+ */
 public class MovieListener implements Listener {
 
     private final Movie parent;
