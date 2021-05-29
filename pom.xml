@@ -37,6 +37,14 @@
             </plugin>
         </plugins>
     </build>
+    
+    <repositories>
+        <!-- This adds the Spigot Maven repository to the build -->
+        <repository>
+            <id>spigot-repo</id>
+            <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
+        </repository>
+    </repositories>
 
     <distributionManagement>
         <repository>
@@ -45,9 +53,4 @@
             <url>https://maven.pkg.github.com/birthdates/Video-To-Minecraft</url>
         </repository>
     </distributionManagement>
-
-    <dependencies>
-
-    </dependencies>
-
 </project>
