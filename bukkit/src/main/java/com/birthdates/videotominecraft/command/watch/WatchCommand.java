@@ -4,7 +4,7 @@ import com.birthdates.videotominecraft.VideoToMinecraft;
 import com.birthdates.videotominecraft.command.PlayerOnlyCommand;
 import com.birthdates.videotominecraft.maps.Maps;
 import com.birthdates.videotominecraft.maps.renderer.MapImageRenderer;
-import com.birthdates.videotominecraft.versioning.Versioning;
+import com.birthdates.videotominecraft.utils.Versioning;
 import com.birthdates.videotominecraft.worker.impl.ExtractWorker;
 import com.birthdates.videotominecraft.worker.impl.FrameWorker;
 import org.bukkit.ChatColor;

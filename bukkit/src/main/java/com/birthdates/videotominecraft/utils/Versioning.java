@@ -1,4 +1,4 @@
-package com.birthdates.videotominecraft.versioning;
+package com.birthdates.videotominecraft.utils;
 
 import lombok.AllArgsConstructor;
 import lombok.experimental.UtilityClass;

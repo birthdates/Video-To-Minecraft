@@ -2,7 +2,7 @@ package com.birthdates.videotominecraft.maps;
 
 import com.birthdates.videotominecraft.legacy.maps.LegacyMaps;
 import com.birthdates.videotominecraft.maps.renderer.MapImageRenderer;
-import com.birthdates.videotominecraft.versioning.Versioning;
+import com.birthdates.videotominecraft.utils.Versioning;
 import lombok.Getter;
 import lombok.experimental.UtilityClass;
 import org.bukkit.Bukkit;
@@ -21,7 +21,7 @@ public class Maps {
     private final String mapName = ChatColor.GRAY + "Video";
     @Getter
     private final int resolution = 128;
-    
+
     public ItemStack createMap(Player player, World world, MapImageRenderer imageRenderer) {
         MapView mapView = Bukkit.createMap(world);
         boolean legacy = Versioning.isMapLegacy(); // < 1.13
