@@ -12,17 +12,17 @@ public class Locations {
      * @return {@link Direction} associated with the location
      */
     public Direction getDirection(Location location) {
-        double rot = location.getYaw() % 360;
-        if (rot < 0) {
-            rot += 360.0;
+        double rot = location.getYaw() % 360D;
+        if (rot < 0D) {
+            rot += 360.0D;
         }
-        if (0 <= rot && rot < 45 || 315 <= rot && rot < 360.0) {
+        if (0D <= rot && rot < 45D || 315D <= rot && rot < 360.0D) {
             return Direction.SOUTH;
-        } else if (45 <= rot && rot < 135) {
+        } else if (45D <= rot && rot < 135D) {
             return Direction.WEST;
-        } else if (135 <= rot && rot < 225) {
+        } else if (135D <= rot && rot < 225D) {
             return Direction.NORTH;
-        } else if (225 <= rot && rot < 315) {
+        } else if (225D <= rot && rot < 315D) {
             return Direction.EAST;
         }
         return Direction.EAST;
