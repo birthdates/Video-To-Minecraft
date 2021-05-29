@@ -52,6 +52,11 @@ public class VideoToMinecraft extends JavaPlugin {
         getCommand("watchmovie").setExecutor(new WatchMovieCommand());
     }
 
+    /**
+     * Faster access for the config FPS value
+     *
+     * @return The FPS value in the configuration file
+     */
     public long getFPS() {
         return configuration.getFps();
     }

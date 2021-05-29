@@ -27,7 +27,6 @@ public class Maps {
 
         ItemStack map = new ItemStack(Material.FILLED_MAP);
         MapMeta mapMeta = (MapMeta) map.getItemMeta();
-
         mapMeta.setScaling(false);
         mapMeta.setDisplayName(mapName);
         mapMeta.setMapView(mapView);
