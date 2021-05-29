@@ -85,8 +85,8 @@ public class WatchCommand extends PlayerOnlyCommand {
     }
 
     private void addOrSetItemInHand(Player player, ItemStack itemStack) {
-        if (player.getInventory().getItemInMainHand().getType() == Material.AIR) {
-            player.getInventory().setItemInMainHand(itemStack);
+        if (player.getItemInHand().getType() == Material.AIR) {
+            player.setItemInHand(itemStack);
             return;
         }
         player.getInventory().addItem(itemStack);

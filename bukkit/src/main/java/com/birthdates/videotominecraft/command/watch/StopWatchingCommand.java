@@ -2,6 +2,7 @@ package com.birthdates.videotominecraft.command.watch;
 
 import com.birthdates.videotominecraft.command.PlayerOnlyCommand;
 import com.birthdates.videotominecraft.maps.Maps;
+import com.birthdates.videotominecraft.versioning.Versioning;
 import com.birthdates.videotominecraft.worker.Worker;
 import com.birthdates.videotominecraft.worker.impl.FrameWorker;
 import org.bukkit.ChatColor;
@@ -25,7 +26,7 @@ public class StopWatchingCommand extends PlayerOnlyCommand {
         Player player = (Player) sender;
         boolean removed =
                 removeMapAndWorker(player, player.getInventory().getContents()) ||
-                        removeMapAndWorker(player, player.getInventory().getExtraContents());
+                        Versioning.isAheadOrEqualTo(9) && removeMapAndWorker(player, player.getInventory().getExtraContents());
         sender.sendMessage((removed ? ChatColor.GREEN : ChatColor.RED) + "You have " + (removed ? "" : "not") + " removed any video players.");
         return true;
     }

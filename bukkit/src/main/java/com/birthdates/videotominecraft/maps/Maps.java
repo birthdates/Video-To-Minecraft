@@ -1,6 +1,8 @@
 package com.birthdates.videotominecraft.maps;
 
+import com.birthdates.videotominecraft.legacy.maps.LegacyMaps;
 import com.birthdates.videotominecraft.maps.renderer.MapImageRenderer;
+import com.birthdates.videotominecraft.versioning.Versioning;
 import lombok.Getter;
 import lombok.experimental.UtilityClass;
 import org.bukkit.Bukkit;
@@ -20,16 +22,24 @@ public class Maps {
     @Getter
     private final int resolution = 128;
 
+    private ItemStack getMapItem() {
+        //if < 1.13 use correct map item
+        ItemStack itemStack = new ItemStack(Material.FILLED_MAP);
+        return itemStack;
+    }
+
     public ItemStack createMap(Player player, World world, MapImageRenderer imageRenderer) {
         MapView mapView = Bukkit.createMap(world);
         mapView.getRenderers().forEach(mapView::removeRenderer);
         mapView.addRenderer(imageRenderer);
-
-        ItemStack map = new ItemStack(Material.FILLED_MAP);
+        boolean legacy = Versioning.isBehind(13); // < 1.13
+        ItemStack map = legacy ? LegacyMaps.getMapItem(mapView) : new ItemStack(Material.FILLED_MAP);
         MapMeta mapMeta = (MapMeta) map.getItemMeta();
         mapMeta.setScaling(false);
         mapMeta.setDisplayName(mapName);
-        mapMeta.setMapView(mapView);
+        if (!legacy) {
+            mapMeta.setMapView(mapView);
+        }
 
         map.setItemMeta(mapMeta);
         if (player != null) player.sendMap(mapView);
