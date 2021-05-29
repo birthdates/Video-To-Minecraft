@@ -76,6 +76,7 @@
             <groupId>com.birthdates</groupId>
             <artifactId>video-to-minecraft-legacy</artifactId>
             <version>${project.version}</version>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
 
