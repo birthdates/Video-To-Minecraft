@@ -21,9 +21,10 @@ public class MapImageRenderer extends MapRenderer {
      * @param pixels {@link Maps#getResolution()}x{@link Maps#getResolution()} pixel array
      */
     public void drawRawPixels(byte[] pixels) {
-        for (int x = 0; x < Maps.getResolution(); ++x) {
-            for (int y = 0; y < Maps.getResolution(); ++y) {
-                mapCanvas.setPixel(x, y, pixels[y * Maps.getResolution() + x]);
+        int mapRes = Maps.getResolution();
+        for (int x = 0; x < mapRes; ++x) {
+            for (int y = 0; y < mapRes; ++y) {
+                mapCanvas.setPixel(x, y, pixels[y * mapRes + x]);
             }
         }
         imageDrawn = true;
