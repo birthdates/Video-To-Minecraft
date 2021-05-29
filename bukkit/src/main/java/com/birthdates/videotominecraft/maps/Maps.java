@@ -21,13 +21,7 @@ public class Maps {
     private final String mapName = ChatColor.GRAY + "Video";
     @Getter
     private final int resolution = 128;
-
-    private ItemStack getMapItem() {
-        //if < 1.13 use correct map item
-        ItemStack itemStack = new ItemStack(Material.FILLED_MAP);
-        return itemStack;
-    }
-
+    
     public ItemStack createMap(Player player, World world, MapImageRenderer imageRenderer) {
         MapView mapView = Bukkit.createMap(world);
         boolean legacy = Versioning.isLegacy(); // < 1.13
