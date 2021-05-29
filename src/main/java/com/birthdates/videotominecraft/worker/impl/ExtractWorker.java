@@ -125,6 +125,6 @@ public class ExtractWorker extends Worker {
     }
 
     public double getScore() {
-        return 2D;
+        return 1D;
     }
 }
