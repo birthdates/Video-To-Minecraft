@@ -73,7 +73,7 @@ public class VideoToMinecraft extends JavaPlugin {
     private void checkForFFMPEG() {
         try {
             Process process = Runtime.getRuntime().exec("ffmpeg");
-            process.destroy();
+            process.destroy(); //destroy if somehow, it's open
         } catch (IOException ignored) {
             throw new IllegalStateException("FFMPEG not in path!");
         }

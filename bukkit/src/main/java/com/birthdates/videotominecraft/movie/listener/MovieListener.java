@@ -32,6 +32,11 @@ public class MovieListener implements Listener {
         cancelIfRemovable(event, event.getEntity());
     }
 
+    /**
+     * Cancel a {@link Cancellable} if {@code object} is apart of {@link parent}
+     * @param event Event to cancel
+     * @param object Target object
+     */
     private void cancelIfRemovable(Cancellable event, Object object) {
         for (IRemovable removable : parent.getToRemove()) {
             if (!removable.equals(object)) continue;
