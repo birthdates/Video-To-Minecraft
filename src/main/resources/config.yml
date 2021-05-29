@@ -2,3 +2,4 @@
 
 grid-size: 5
 fps: 15
+disable-actions-on-movie: true

@@ -14,15 +14,22 @@ public class Configuration {
 
     private int gridSize;
     private long fps;
+    private boolean disableMovieActions;
 
     public Configuration() {
         VideoToMinecraft.getInstance().saveDefaultConfig();
         fileConfiguration = VideoToMinecraft.getInstance().getConfig();
-        loadValues();
+        try {
+            loadValues();
+        } catch (Exception exception) {
+            System.out.println("Failed to load config:");
+            throw exception;
+        }
     }
 
     private void loadValues() {
         gridSize = fileConfiguration.getInt("grid-size");
         fps = fileConfiguration.getLong("fps");
+        disableMovieActions = fileConfiguration.getBoolean("disable-actions-on-movie");
     }
 }

@@ -3,15 +3,18 @@ package com.birthdates.videotominecraft.movie;
 import com.birthdates.videotominecraft.VideoToMinecraft;
 import com.birthdates.videotominecraft.maps.Maps;
 import com.birthdates.videotominecraft.maps.renderer.MapImageRenderer;
+import com.birthdates.videotominecraft.movie.listener.MovieListener;
 import com.birthdates.videotominecraft.movie.removable.IRemovable;
 import com.birthdates.videotominecraft.movie.removable.impl.BlockRemovable;
 import com.birthdates.videotominecraft.movie.removable.impl.EntityRemovable;
 import com.birthdates.videotominecraft.utils.locations.Direction;
 import com.birthdates.videotominecraft.utils.locations.Locations;
 import com.birthdates.videotominecraft.worker.impl.FrameWorker;
+import lombok.Getter;
 import org.bukkit.*;
 import org.bukkit.entity.ItemFrame;
 import org.bukkit.entity.Player;
+import org.bukkit.event.HandlerList;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 
@@ -26,11 +29,24 @@ public class Movie {
     private final static int gridSizeSquared = VideoToMinecraft.getInstance().getConfiguration().getGridSize() * VideoToMinecraft.getInstance().getConfiguration().getGridSize();
     private final FrameWorker frameWorker;
     private final MovieBoard[] boards = new MovieBoard[gridSizeSquared];
+    @Getter
     private final List<IRemovable> toRemove = new ArrayList<>();
+    private MovieListener movieListener;
 
     public Movie(Location location, String folder) {
         frameWorker = new FrameWorker(folder);
+        if (VideoToMinecraft.getInstance().getConfiguration().isDisableMovieActions())
+            registerListener();
         populateBoards(location);
+    }
+
+    private void registerListener() {
+        Bukkit.getPluginManager().registerEvents((movieListener = new MovieListener(this)), VideoToMinecraft.getInstance());
+    }
+
+    private void unregisterListener() {
+        if (movieListener != null)
+            HandlerList.unregisterAll(movieListener);
     }
 
     public void populateBoards(Location location) {
@@ -85,6 +101,7 @@ public class Movie {
         if (!Bukkit.isPrimaryThread()) VideoToMinecraft.getInstance().postToMainThread(this::remove);
         else remove();
         frameWorker.finish(); //in case of it isn't finished
+        unregisterListener();
     }
 
     private void remove() {
