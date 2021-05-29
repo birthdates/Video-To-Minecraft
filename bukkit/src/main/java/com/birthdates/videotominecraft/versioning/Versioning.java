@@ -9,13 +9,16 @@ public class Versioning {
 
     private final Version bukkitVersion = parseVersion(Bukkit.getBukkitVersion());
 
-
     public boolean isAheadOrEqualTo(int minor) {
         return bukkitVersion.minor >= minor;
     }
 
     public boolean isBehind(int minor) {
         return !isAheadOrEqualTo(minor);
+    }
+
+    public boolean isLegacy() {
+        return isBehind(13);
     }
 
     private Version parseVersion(String ver) {

@@ -32,7 +32,7 @@ public class Maps {
         MapView mapView = Bukkit.createMap(world);
         mapView.getRenderers().forEach(mapView::removeRenderer);
         mapView.addRenderer(imageRenderer);
-        boolean legacy = Versioning.isBehind(13); // < 1.13
+        boolean legacy = Versioning.isLegacy(); // < 1.13
         ItemStack map = legacy ? LegacyMaps.getMapItem(mapView) : new ItemStack(Material.FILLED_MAP);
         MapMeta mapMeta = (MapMeta) map.getItemMeta();
         mapMeta.setScaling(false);

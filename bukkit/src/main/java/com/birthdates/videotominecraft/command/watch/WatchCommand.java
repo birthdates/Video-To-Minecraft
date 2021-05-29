@@ -4,6 +4,7 @@ import com.birthdates.videotominecraft.VideoToMinecraft;
 import com.birthdates.videotominecraft.command.PlayerOnlyCommand;
 import com.birthdates.videotominecraft.maps.Maps;
 import com.birthdates.videotominecraft.maps.renderer.MapImageRenderer;
+import com.birthdates.videotominecraft.versioning.Versioning;
 import com.birthdates.videotominecraft.worker.impl.ExtractWorker;
 import com.birthdates.videotominecraft.worker.impl.FrameWorker;
 import org.bukkit.ChatColor;
@@ -57,10 +58,11 @@ public class WatchCommand extends PlayerOnlyCommand {
         }
 
         /*
-        ID used for the output directory (i.e rotated-5-videoname-20)
+        ID used for the output directory (i.e rotated-5-videoname-20-true)
         Use fps to ensure the correct framerate & grid size to ensure correct resolution
+        The boolean at the end of the id is if the version it was rendered on was legacy (different colors)
          */
-        String newId = (rotate ? "rotated-" + VideoToMinecraft.getInstance().getConfiguration().getGridSize() + "-" : "") + id + "-" + VideoToMinecraft.getInstance().getFPS();
+        String newId = (rotate ? "rotated-" + VideoToMinecraft.getInstance().getConfiguration().getGridSize() + "-" : "") + id + "-" + VideoToMinecraft.getInstance().getFPS() + "-" + Versioning.isLegacy();
         String outputDir = VideoToMinecraft.getInstance().getDataFolder() + "/frames/" + newId + "/";
         sender.sendMessage(ChatColor.GREEN + "Extracting...");
 
