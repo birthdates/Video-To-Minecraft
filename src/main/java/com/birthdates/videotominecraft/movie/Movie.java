@@ -6,11 +6,14 @@ import com.birthdates.videotominecraft.maps.renderer.MapImageRenderer;
 import com.birthdates.videotominecraft.movie.removable.IRemovable;
 import com.birthdates.videotominecraft.movie.removable.impl.BlockRemovable;
 import com.birthdates.videotominecraft.movie.removable.impl.EntityRemovable;
+import com.birthdates.videotominecraft.utils.locations.Direction;
+import com.birthdates.videotominecraft.utils.locations.Locations;
 import com.birthdates.videotominecraft.worker.impl.FrameWorker;
 import org.bukkit.*;
 import org.bukkit.entity.ItemFrame;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.util.Vector;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +22,7 @@ import java.util.List;
  * Class to watch a video on multiple maps
  */
 public class Movie {
-    
+
     private final static int gridSizeSquared = VideoToMinecraft.getInstance().getConfiguration().getGridSize() * VideoToMinecraft.getInstance().getConfiguration().getGridSize();
     private final FrameWorker frameWorker;
     private final MovieBoard[] boards = new MovieBoard[gridSizeSquared];
@@ -34,10 +37,10 @@ public class Movie {
         int gridSize = VideoToMinecraft.getInstance().getConfiguration().getGridSize();
 
         int index = 0;
+        Direction direction = Locations.getDirection(location);
         for (int i = 0; i < gridSize; ++i) {
             for (int j = gridSize; j > 0; --j, index++) {
-                //TODO: fix that you have to be looking south
-                Location boardLocation = location.clone().add(gridSize - i, gridSize - j, 0);
+                Location boardLocation = location.clone().add(getAddition(direction, gridSize, i, j));
                 testInvalidLocation(boardLocation);
 
                 addToRemove(new BlockRemovable(boardLocation));
@@ -45,6 +48,27 @@ public class Movie {
                 boards[index] = movieBoard;
             }
         }
+    }
+
+    /**
+     * Get the base location of a theatre based off direction
+     *
+     * @param direction Location direction
+     * @param gridSize  Theatre grid size
+     * @param x2        Grid x
+     * @param y2        Grid y
+     * @return A Vector relative to the direction of the location
+     */
+    private Vector getAddition(Direction direction, int gridSize, int x2, int y2) {
+        int x = direction == Direction.NORTH ? x2 - gridSize : gridSize - x2;
+        int y = gridSize - y2;
+        int z = direction == Direction.EAST ? x2 - gridSize : gridSize - x2;
+
+        Vector vector = new Vector(0, y, 0);
+        if (direction.isZ()) vector.setZ(z);
+        else vector.setX(x);
+
+        return vector;
     }
 
     private void testInvalidLocation(Location location) {
@@ -119,10 +143,11 @@ public class Movie {
          */
         private byte[] section(byte[] bytes) {
             int size = getResolution(bytes);
+            int mapRes = Maps.getResolution();
             int gridSize = size / VideoToMinecraft.getInstance().getConfiguration().getGridSize();
             int x = this.x * gridSize;
             int y = this.y * gridSize;
-            byte[] output = new byte[Maps.getResolution() * Maps.getResolution()];
+            byte[] output = new byte[mapRes * mapRes];
 
             /*
              * This sets the corresponding pixel of output from bytes.
@@ -132,7 +157,7 @@ public class Movie {
             for (int x2 = x; x2 < x + gridSize; ++x2) {
                 for (int y2 = y; y2 < y + gridSize; ++y2) {
                     //i.e if size is 256 & we are at x 256, the output index would be x 128
-                    output[(y2 - y) * Maps.getResolution() + (x2 - x)] = bytes[y2 * size + (x2 - gridSize)];
+                    output[(y2 - y) * mapRes + (x2 - x)] = bytes[y2 * size + (x2 - gridSize)];
                 }
             }
 
@@ -155,8 +180,8 @@ public class Movie {
             }
 
             addToRemove(new EntityRemovable(itemFrame));
-            itemFrame.setRotation(Rotation.CLOCKWISE_45);
             itemFrame.setItem(map);
+            itemFrame.setRotation(Rotation.CLOCKWISE_45);
         }
 
         public void update(byte[] bufferedImage) {

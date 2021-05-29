@@ -1,4 +1,4 @@
-package com.birthdates.videotominecraft.compression;
+package com.birthdates.videotominecraft.utils;
 
 import lombok.experimental.UtilityClass;
 

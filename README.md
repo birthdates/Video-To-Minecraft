@@ -18,7 +18,6 @@ This plugin targets the 1.16 Bukkit API
 
 # Known Issues
 
-* You have to be looking south to spawn a movie theatre correctly
 * The max extraction time is 120 seconds which can limit your input video's length
 
 # Next Steps

@@ -1,8 +1,8 @@
 package com.birthdates.videotominecraft.worker.impl;
 
 import com.birthdates.videotominecraft.VideoToMinecraft;
-import com.birthdates.videotominecraft.compression.Compression;
 import com.birthdates.videotominecraft.maps.Maps;
+import com.birthdates.videotominecraft.utils.Compression;
 import com.birthdates.videotominecraft.worker.Worker;
 import org.bukkit.map.MapPalette;
 
