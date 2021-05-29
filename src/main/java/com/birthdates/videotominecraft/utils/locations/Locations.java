@@ -6,6 +6,11 @@ import org.bukkit.Location;
 @UtilityClass
 public class Locations {
 
+    /**
+     * Get a {@link Direction} based off location yaw
+     * @param location Target location
+     * @return {@link Direction} associated with the location
+     */
     public Direction getDirection(Location location) {
         double rot = location.getYaw() % 360;
         if (rot < 0) {
