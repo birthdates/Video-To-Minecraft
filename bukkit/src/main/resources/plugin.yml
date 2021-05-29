@@ -1,6 +1,6 @@
 name: VideoToMinecraft
 author: birthdates
-version: 1.3.2
+version: 1.3.3
 main: com.birthdates.videotominecraft.VideoToMinecraft
 description: A plugin to read video files and allow you to watch it in minecraft using ffmpeg
 api-version: 1.13
