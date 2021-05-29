@@ -24,7 +24,7 @@ public class Maps {
     
     public ItemStack createMap(Player player, World world, MapImageRenderer imageRenderer) {
         MapView mapView = Bukkit.createMap(world);
-        boolean legacy = Versioning.isLegacy(); // < 1.13
+        boolean legacy = Versioning.isMapLegacy(); // < 1.13
         mapView.getRenderers().forEach(mapView::removeRenderer);
         mapView.addRenderer(imageRenderer);
 

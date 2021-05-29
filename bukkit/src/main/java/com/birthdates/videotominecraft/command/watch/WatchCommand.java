@@ -62,7 +62,7 @@ public class WatchCommand extends PlayerOnlyCommand {
         Use fps to ensure the correct framerate & grid size to ensure correct resolution
         The boolean at the end of the id is if the version it was rendered on was legacy (different colors)
          */
-        String newId = (rotate ? "rotated-" + VideoToMinecraft.getInstance().getConfiguration().getGridSize() + "-" : "") + id + "-" + VideoToMinecraft.getInstance().getFPS() + "-" + Versioning.isLegacy();
+        String newId = (rotate ? "rotated-" + VideoToMinecraft.getInstance().getConfiguration().getGridSize() + "-" : "") + id + "-" + VideoToMinecraft.getInstance().getFPS() + "-" + Versioning.isMapLegacy();
         String outputDir = VideoToMinecraft.getInstance().getDataFolder() + "/frames/" + newId + "/";
         sender.sendMessage(ChatColor.GREEN + "Extracting...");
 
