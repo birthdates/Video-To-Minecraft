@@ -8,6 +8,7 @@ public class Locations {
 
     /**
      * Get a {@link Direction} based off location yaw
+     *
      * @param location Target location
      * @return {@link Direction} associated with the location
      */
