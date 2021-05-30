@@ -84,40 +84,36 @@ public class ExtractWorker extends Worker {
     private void transformToMinecraftColors(Runnable callback) {
         FrameWorker frameWorker = new FrameWorker(outputDir);
         AtomicInteger number = new AtomicInteger(1);
-        try {
-            //start reading all the ffmpeg generated frames at 1000 FPS (1ms delay)
-            frameWorker.start(1000L, false, (bytes) -> {
-                if (bytes == null)
-                    return;
+        //start reading all the ffmpeg generated frames at 1000 FPS (1ms delay)
+        frameWorker.start(1000L, false, (bytes) -> {
+            if (bytes == null)
+                return;
 
-                BufferedImage image = null;
-                try {
-                    image = ImageIO.read(new ByteArrayInputStream(bytes));
-                } catch (IOException exception) {
-                    exception.printStackTrace();
-                }
-                if (image == null)
-                    return;
+            BufferedImage image = null;
+            try {
+                image = ImageIO.read(new ByteArrayInputStream(bytes));
+            } catch (IOException exception) {
+                exception.printStackTrace();
+            }
+            if (image == null)
+                return;
 
-                /*
-                 * imageToBytes not only converts the image to bytes, it also changes the colors to the nearest minecraft color
-                 * However, this method is so slow to where this calculation has to be baked.
-                 * You could make your own method of converting the image to bytes & colors to minecraft colors as the Bukkit method can do with some improvements, however, most of their methods are private and would require reflection.
-                 */
-                byte[] imageBytes = MapPalette.imageToBytes(image);
-                Path path = new File(outputDir + number.getAndIncrement() + ".jpeg").toPath();
-                try {
-                    Files.write(path, Compression.compress(imageBytes));
-                } catch (IOException exception) {
-                    exception.printStackTrace();
-                }
-            }, () -> {
-                callback.run();
-                super.finish();
-            });
-        } catch (Exception exception) {
-            exception.printStackTrace();
-        }
+            /*
+             * imageToBytes not only converts the image to bytes, it also changes the colors to the nearest minecraft color
+             * However, this method is so slow to where this calculation has to be baked.
+             * You could make your own method of converting the image to bytes & colors to minecraft colors as the Bukkit method can do with some improvements, however, most of their methods are private and would require reflection.
+             */
+            byte[] imageBytes = MapPalette.imageToBytes(image);
+            Path path = new File(outputDir + number.getAndIncrement() + ".jpeg").toPath();
+            try {
+                Files.write(path, Compression.compress(imageBytes));
+            } catch (IOException exception) {
+                exception.printStackTrace();
+            }
+        }, () -> {
+            callback.run();
+            super.finish();
+        });
     }
 
     private String scaleString(int res) {
