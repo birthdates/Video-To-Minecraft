@@ -201,11 +201,11 @@ public class Movie {
             itemFrame.setRotation(Rotation.CLOCKWISE_45);
         }
 
-        public void update(byte[] bufferedImage) {
-            if (bufferedImage == null) {
+        public void update(byte[] image) {
+            if (image == null) {
                 return;
             }
-            renderer.drawRawPixels(section(bufferedImage));
+            renderer.drawRawPixels(section(image));
         }
     }
 }

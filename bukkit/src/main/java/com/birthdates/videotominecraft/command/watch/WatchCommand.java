@@ -82,7 +82,7 @@ public class WatchCommand extends PlayerOnlyCommand {
         ItemStack itemStack = Maps.createMap(player, player.getWorld(), imageRenderer);
         FrameWorker frameWorker = new FrameWorker(itemStack, framePath);
 
-        frameWorker.start((bufferedImage -> renderAndSendToPlayer(bufferedImage, player, imageRenderer)), () -> onVideoEnd(player, itemStack));
+        frameWorker.start((image -> renderAndSendToPlayer(image, player, imageRenderer)), () -> onVideoEnd(player, itemStack));
         addOrSetItemInHand(player, itemStack);
         player.sendMessage(ChatColor.GREEN + "Spawned.");
     }
@@ -104,8 +104,8 @@ public class WatchCommand extends PlayerOnlyCommand {
         player.sendMessage(ChatColor.GREEN + "Video complete.");
     }
 
-    private void renderAndSendToPlayer(byte[] bufferedImage, Player player, MapImageRenderer imageRenderer) {
-        imageRenderer.drawRawPixels(bufferedImage);
+    private void renderAndSendToPlayer(byte[] image, Player player, MapImageRenderer imageRenderer) {
+        imageRenderer.drawRawPixels(image);
         imageRenderer.sendToPlayer(player);
     }
 }
