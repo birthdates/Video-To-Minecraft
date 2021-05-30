@@ -7,6 +7,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.map.MapView;
 
 /**
+ * Class to handle legacy functionality
  * Since there is little to transform to a legacy version, no class implementations or interface APIs needed.
  */
 @UtilityClass
