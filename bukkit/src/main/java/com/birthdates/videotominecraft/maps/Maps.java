@@ -1,6 +1,6 @@
 package com.birthdates.videotominecraft.maps;
 
-import com.birthdates.videotominecraft.legacy.maps.LegacyMaps;
+import com.birthdates.videotominecraft.legacy.Legacy;
 import com.birthdates.videotominecraft.maps.renderer.MapImageRenderer;
 import com.birthdates.videotominecraft.utils.Versioning;
 import lombok.Getter;
@@ -28,7 +28,7 @@ public class Maps {
         mapView.getRenderers().forEach(mapView::removeRenderer);
         mapView.addRenderer(imageRenderer);
 
-        ItemStack map = legacy ? LegacyMaps.getMapItem(mapView) : new ItemStack(Material.FILLED_MAP);
+        ItemStack map = legacy ? Legacy.getMapItem(mapView) : new ItemStack(Material.FILLED_MAP);
         MapMeta mapMeta = (MapMeta) map.getItemMeta();
         mapMeta.setScaling(false);
         mapMeta.setDisplayName(mapName);

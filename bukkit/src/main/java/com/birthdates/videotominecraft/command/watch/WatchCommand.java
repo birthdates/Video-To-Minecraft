@@ -2,6 +2,7 @@ package com.birthdates.videotominecraft.command.watch;
 
 import com.birthdates.videotominecraft.VideoToMinecraft;
 import com.birthdates.videotominecraft.command.PlayerOnlyCommand;
+import com.birthdates.videotominecraft.legacy.Legacy;
 import com.birthdates.videotominecraft.maps.Maps;
 import com.birthdates.videotominecraft.maps.renderer.MapImageRenderer;
 import com.birthdates.videotominecraft.utils.Versioning;
@@ -87,8 +88,12 @@ public class WatchCommand extends PlayerOnlyCommand {
     }
 
     private void addOrSetItemInHand(Player player, ItemStack itemStack) {
-        if (player.getItemInHand().getType() == Material.AIR) {
-            player.setItemInHand(itemStack);
+        boolean legacy = Versioning.isBehind(9);
+        if (legacy && Legacy.isMainHandAir(player) || !legacy && player.getInventory().getItemInMainHand().getType() == Material.AIR) {
+            if(legacy)
+                Legacy.setItemInHand(player, itemStack);
+            else
+                player.getInventory().setItemInMainHand(itemStack);
             return;
         }
         player.getInventory().addItem(itemStack);
