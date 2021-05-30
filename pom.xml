@@ -60,4 +60,13 @@
             <url>https://maven.pkg.github.com/birthdates/Video-To-Minecraft</url>
         </repository>
     </distributionManagement>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.20</version>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
 </project>
