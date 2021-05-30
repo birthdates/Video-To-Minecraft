@@ -37,7 +37,8 @@ public class MovieListener implements Listener {
 
     /**
      * Cancel a {@link Cancellable} if {@code object} is apart of {@link parent}
-     * @param event Event to cancel
+     *
+     * @param event  Event to cancel
      * @param object Target object
      */
     private void cancelIfRemovable(Cancellable event, Object object) {

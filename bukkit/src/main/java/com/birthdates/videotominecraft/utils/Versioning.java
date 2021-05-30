@@ -19,6 +19,7 @@ public class Versioning {
 
     /**
      * Check if our current Bukkit version is a legacy version for maps
+     *
      * @return Version < 1.13
      */
     public boolean isMapLegacy() {

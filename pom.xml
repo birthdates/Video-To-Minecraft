@@ -44,7 +44,7 @@
             </plugin>
         </plugins>
     </build>
-    
+
     <repositories>
         <!-- This adds the Spigot Maven repository to the build -->
         <repository>

@@ -90,7 +90,7 @@ public class WatchCommand extends PlayerOnlyCommand {
     private void addOrSetItemInHand(Player player, ItemStack itemStack) {
         boolean legacy = Versioning.isBehind(9);
         if (legacy && Legacy.isMainHandAir(player) || !legacy && player.getInventory().getItemInMainHand().getType() == Material.AIR) {
-            if(legacy)
+            if (legacy)
                 Legacy.setItemInHand(player, itemStack);
             else
                 player.getInventory().setItemInMainHand(itemStack);
