@@ -50,7 +50,7 @@ public abstract class Worker {
     /**
      * Used for thread count
      *
-     * @return The score for intensity (2 = 2 threads)
+     * @return The score for intensity (1 = 1 threads, 0.5 means a worker will only count has half a thread, thus needing two to complete 1 thread)
      */
     public abstract double getScore();
 }
