@@ -118,7 +118,7 @@ public class Movie {
 
         //update the board for each player
         for (Player player : Bukkit.getOnlinePlayers()) {
-            if (player.getLocation().distance(location) >= VideoToMinecraft.getInstance().getConfiguration().getMaxWatchDistance())
+            if (player.getLocation().distanceSquared(location) >= VideoToMinecraft.getInstance().getConfiguration().getMaxWatchDistance()) //watch distance is already squared
                 continue;
             for (MovieBoard board : boards) {
                 board.renderer.sendToPlayer(player);
