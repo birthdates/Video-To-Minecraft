@@ -21,6 +21,10 @@ public class Maps {
     private final String mapName = ChatColor.GRAY + "Video";
     @Getter
     private final int resolution = 128;
+
+    /**
+     * This field is the bit needed to manipulate a number to the resolution (i.e i << bit should be resolution)
+     */
     @Getter
     private final int bit = 7;
 
