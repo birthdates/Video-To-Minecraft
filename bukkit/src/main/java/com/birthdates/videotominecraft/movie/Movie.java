@@ -12,7 +12,6 @@ import com.birthdates.videotominecraft.utils.locations.Locations;
 import com.birthdates.videotominecraft.worker.impl.FrameWorker;
 import lombok.Getter;
 import org.bukkit.*;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.ItemFrame;
 import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;
@@ -32,8 +31,8 @@ public class Movie {
     private final MovieBoard[] boards = new MovieBoard[gridSizeSquared];
     @Getter
     private final List<IRemovable> toRemove = new ArrayList<>();
-    private MovieListener movieListener;
     private final Location location;
+    private MovieListener movieListener;
 
     public Movie(Location location, String folder) {
         frameWorker = new FrameWorker(folder);
@@ -119,7 +118,8 @@ public class Movie {
 
         //update the board for each player
         for (Player player : Bukkit.getOnlinePlayers()) {
-            if(player.getLocation().distance(location) >= VideoToMinecraft.getInstance().getConfiguration().getMaxWatchDistance()) continue;
+            if (player.getLocation().distance(location) >= VideoToMinecraft.getInstance().getConfiguration().getMaxWatchDistance())
+                continue;
             for (MovieBoard board : boards) {
                 board.renderer.sendToPlayer(player);
             }

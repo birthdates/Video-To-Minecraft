@@ -32,6 +32,6 @@ public class Configuration {
         gridSize = fileConfiguration.getInt("grid-size");
         fps = fileConfiguration.getLong("fps");
         disableMovieActions = fileConfiguration.getBoolean("movie.disable-actions");
-        maxWatchDistance  = fileConfiguration.getDouble("movie.max-watch-distance");
+        maxWatchDistance = fileConfiguration.getDouble("movie.max-watch-distance");
     }
 }
