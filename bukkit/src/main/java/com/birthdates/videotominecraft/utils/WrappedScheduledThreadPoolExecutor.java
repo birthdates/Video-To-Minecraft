@@ -1,4 +1,4 @@
-package com.birthdates.videotominecraft.executor;
+package com.birthdates.videotominecraft.utils;
 
 import java.util.concurrent.Future;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
