@@ -24,7 +24,7 @@ public class MapImageRenderer extends MapRenderer {
      * @param pixels {@link Maps#getResolution()}x{@link Maps#getResolution()} pixel array
      */
     public void drawRawPixels(byte[] pixels) {
-        if(trySetBuffer(pixels)) {
+        if (trySetBuffer(pixels)) {
             return;
         }
         int mapRes = Maps.getResolution();
@@ -41,15 +41,16 @@ public class MapImageRenderer extends MapRenderer {
     /**
      * Instead of using {@link MapCanvas#setPixel(int, int, byte)} which is a repeat of what calculations we've already done,
      * We can use reflection to set the private buffer field that {@link MapCanvas#setPixel(int, int, byte)} changes.
+     *
      * @param pixels New pixels
      * @return If we changed the field
      */
     private boolean trySetBuffer(byte[] pixels) {
-        if(bufferField == null)
+        if (bufferField == null)
             return false;
         try {
             bufferField.set(mapCanvas, pixels);
-        } catch(IllegalAccessException exception) {
+        } catch (IllegalAccessException exception) {
             exception.printStackTrace();
             return false;
         }
@@ -61,7 +62,8 @@ public class MapImageRenderer extends MapRenderer {
         try {
             bufferField = mapCanvas.getClass().getDeclaredField("buffer");
             bufferField.setAccessible(true);
-        } catch(NoSuchFieldException ignored) {}
+        } catch (NoSuchFieldException ignored) {
+        }
     }
 
     public void sendToPlayer(Player player) {
@@ -72,7 +74,7 @@ public class MapImageRenderer extends MapRenderer {
 
     @Override
     public void render(MapView mapView, MapCanvas mapCanvas, Player player) {
-        if(this.mapCanvas != null && this.mapView != null)
+        if (this.mapCanvas != null && this.mapView != null)
             return;
         this.mapCanvas = mapCanvas;
         this.mapView = mapView;

@@ -141,6 +141,7 @@ public class Movie {
             this.y = y;
             spawnMap(location);
         }
+
         /**
          * Get the resolution of the square image from pixel array
          *
