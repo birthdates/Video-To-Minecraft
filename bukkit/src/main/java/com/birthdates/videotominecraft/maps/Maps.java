@@ -21,6 +21,8 @@ public class Maps {
     private final String mapName = ChatColor.GRAY + "Video";
     @Getter
     private final int resolution = 128;
+    @Getter
+    private final int bit = 7;
 
     public ItemStack createMap(Player player, World world, MapImageRenderer imageRenderer) {
         MapView mapView = Bukkit.createMap(world);

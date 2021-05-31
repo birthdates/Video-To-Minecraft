@@ -141,7 +141,6 @@ public class Movie {
             this.y = y;
             spawnMap(location);
         }
-
         /**
          * Get the resolution of the square image from pixel array
          *
@@ -161,10 +160,11 @@ public class Movie {
         private byte[] section(byte[] bytes) {
             int size = getResolution(bytes);
             int mapRes = Maps.getResolution();
+            int bit = Maps.getBit();
             int gridSize = size / VideoToMinecraft.getInstance().getConfiguration().getGridSize();
             int x = this.x * gridSize;
             int y = this.y * gridSize;
-            byte[] output = new byte[mapRes * mapRes];
+            byte[] output = new byte[mapRes << bit]; //use bit manipulation to square mapRes (128)
 
             /*
              * This sets the corresponding pixel of output from bytes.
@@ -174,7 +174,7 @@ public class Movie {
             for (int x2 = x; x2 < x + gridSize; ++x2) {
                 for (int y2 = y; y2 < y + gridSize; ++y2) {
                     //i.e if size is 256 & we are at x 256, the output index would be x 128
-                    output[(y2 - y) * mapRes + (x2 - x)] = bytes[y2 * size + (x2 - gridSize)];
+                    output[((y2 - y) << bit) + (x2 - x)] = bytes[y2 * size + (x2 - gridSize)];
                 }
             }
 
