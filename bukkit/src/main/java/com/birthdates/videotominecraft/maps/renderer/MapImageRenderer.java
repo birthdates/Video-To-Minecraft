@@ -60,7 +60,7 @@ public class MapImageRenderer extends MapRenderer {
 
     private void getBufferField() {
         try {
-            bufferField = mapCanvas.getClass().getDeclaredField("buffer");
+            bufferField = mapCanvas.getClass().getDeclaredField("buffer"); //field in CraftMapCanvas
             bufferField.setAccessible(true);
         } catch (NoSuchFieldException ignored) {
         }

@@ -3,4 +3,6 @@
 
 grid-size: 5
 fps: 15
-disable-actions-on-movie: true
+movie:
+  disable-actions: true
+  max-watch-distance: 25.0

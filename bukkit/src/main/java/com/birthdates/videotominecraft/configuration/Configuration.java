@@ -15,6 +15,7 @@ public class Configuration {
     private int gridSize;
     private long fps;
     private boolean disableMovieActions;
+    private double maxWatchDistance;
 
     public Configuration() {
         VideoToMinecraft.getInstance().saveDefaultConfig();
@@ -30,6 +31,7 @@ public class Configuration {
     private void loadValues() {
         gridSize = fileConfiguration.getInt("grid-size");
         fps = fileConfiguration.getLong("fps");
-        disableMovieActions = fileConfiguration.getBoolean("disable-actions-on-movie");
+        disableMovieActions = fileConfiguration.getBoolean("movie.disable-actions");
+        maxWatchDistance  = fileConfiguration.getDouble("movie.max-watch-distance");
     }
 }
