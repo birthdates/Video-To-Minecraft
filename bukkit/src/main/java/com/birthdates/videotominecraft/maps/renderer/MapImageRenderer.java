@@ -32,7 +32,7 @@ public class MapImageRenderer extends MapRenderer {
 
         for (int x = 0; x < mapRes; ++x) {
             for (int y = 0; y < mapRes; ++y) {
-                mapCanvas.setPixel(x, y, pixels[(y << bit) + x]);
+                mapCanvas.setPixel(x, y, pixels[(y << bit) + x]); //y << bit is the same as y * mapRes
             }
         }
         imageDrawn = true;
