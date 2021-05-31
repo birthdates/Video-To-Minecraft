@@ -14,6 +14,12 @@ public abstract class IRemovable {
 
     public abstract void remove();
 
+    /**
+     * Act as a middleware for {@link Object#equals(Object)}
+     *
+     * @param other Object to compare with
+     * @return If we or {@link object} are equal to {@code other}
+     */
     @Override
     public boolean equals(Object other) {
         return super.equals(other) || other.getClass() == object.getClass() && object.equals(other);
