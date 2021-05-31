@@ -1,4 +1,5 @@
 ### WARNING: Changing these values will re-extract your videos.
+### When changing these values, it can also impact performance. For example, the video will not be smooth at 1000FPS & will require a lot of computing power.
 
 grid-size: 5
 fps: 15
