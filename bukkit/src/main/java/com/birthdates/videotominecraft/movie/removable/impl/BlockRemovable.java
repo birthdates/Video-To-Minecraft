@@ -28,7 +28,7 @@ public class BlockRemovable extends IRemovable {
      */
     @Override
     public boolean equals(Object other) {
-        if (super.equals(other)) return true;
+        if (other == this) return true;
         if (!(other instanceof Location)) return false;
         Location location2 = (Location) other;
         Location location = getLocation();

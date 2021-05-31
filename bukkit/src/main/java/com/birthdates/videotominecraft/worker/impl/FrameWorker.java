@@ -53,9 +53,8 @@ public class FrameWorker extends Worker {
             }
 
             byte[] frame = readFrame(folderFile, index);
-            if (frame == null) {
+            if (frame == null)
                 return;
-            }
             if (decompress) {
                 frame = Compression.decompress(frame);
                 if (frame == null)

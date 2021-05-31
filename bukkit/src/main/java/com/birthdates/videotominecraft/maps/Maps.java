@@ -39,9 +39,8 @@ public class Maps {
         mapMeta.setScaling(false);
         mapMeta.setDisplayName(mapName);
 
-        if (!legacy) {
+        if (!legacy)
             mapMeta.setMapView(mapView);
-        }
         map.setItemMeta(mapMeta);
         if (player != null) player.sendMap(mapView);
         return map;
