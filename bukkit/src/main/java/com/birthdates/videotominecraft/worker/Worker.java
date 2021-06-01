@@ -1,12 +1,14 @@
 package com.birthdates.videotominecraft.worker;
 
 import com.birthdates.videotominecraft.VideoToMinecraft;
+import com.birthdates.videotominecraft.utils.WrappedScheduledThreadPoolExecutor;
 import lombok.Getter;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Future;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
 
 /**
  * Base worker class
@@ -16,6 +18,8 @@ public abstract class Worker {
     public static final int WORKERS_PER_THREAD = 2;
     @Getter
     private static final List<Worker> workers = new ArrayList<>();
+    protected static final ScheduledThreadPoolExecutor executorService = new WrappedScheduledThreadPoolExecutor(Worker.WORKERS_PER_THREAD);
+
     @Getter
     @Nullable
     protected Object id;
@@ -23,7 +27,7 @@ public abstract class Worker {
     protected Future<?> future;
     private boolean finished;
 
-    public static double getWorkersScore() {
+    private static double getWorkersScore() {
         double output = 0;
         for (Worker worker : workers) {
             output += worker.getScore();
@@ -33,7 +37,7 @@ public abstract class Worker {
 
     protected void start() {
         workers.add(this);
-        VideoToMinecraft.getInstance().resizePool();
+        resizePool();
     }
 
     public boolean finish() {
@@ -43,9 +47,26 @@ public abstract class Worker {
         if (future != null)
             future.cancel(false);
         workers.remove(this);
-        VideoToMinecraft.getInstance().resizePool();
+        resizePool();
         return true;
     }
+
+    public static void stopWorkers() {
+        for (int i = workers.size() - 1; i >= 0; --i) { //loop in reverse to prevent CME
+            Worker worker = workers.get(i);
+            worker.finish();
+        }
+        executorService.shutdown();
+    }
+
+    private static void resizePool() {
+        double workersScore = getWorkersScore();
+        int neededThreads = (int) (workersScore / Worker.WORKERS_PER_THREAD);
+
+        if (neededThreads == 0 || executorService.getCorePoolSize() == neededThreads) return;
+        executorService.setCorePoolSize(neededThreads);
+    }
+
 
     /**
      * Used for thread count

@@ -35,7 +35,7 @@ public class ExtractWorker extends Worker {
     public void start(boolean rotate, Runnable callback) {
         super.start();
         Runnable toMainThread = () -> VideoToMinecraft.getInstance().postToMainThread(callback);
-        future = VideoToMinecraft.getInstance().getExecutorService().submit(() -> work(rotate, toMainThread));
+        future = executorService.submit(() -> work(rotate, toMainThread));
     }
 
     public void work(boolean rotate, Runnable callback) {

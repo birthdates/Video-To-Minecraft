@@ -45,7 +45,7 @@ public class FrameWorker extends Worker {
         int maxFrames = folderFile.listFiles().length; //how many frames were extracted
 
         //receive frames at delay rate
-        future = VideoToMinecraft.getInstance().getExecutorService().scheduleAtFixedRate(() -> {
+        future = executorService.scheduleAtFixedRate(() -> {
             int index = position.getAndIncrement();
             if (index >= maxFrames) {
                 finish();

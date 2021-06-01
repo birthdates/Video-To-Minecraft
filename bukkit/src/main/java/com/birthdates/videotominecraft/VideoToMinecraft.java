@@ -19,7 +19,6 @@ public class VideoToMinecraft extends JavaPlugin {
 
     @Getter
     private static VideoToMinecraft instance;
-    private final ScheduledThreadPoolExecutor executorService = new WrappedScheduledThreadPoolExecutor(Worker.WORKERS_PER_THREAD);
     private Configuration configuration;
 
     public void onEnable() {
@@ -31,16 +30,7 @@ public class VideoToMinecraft extends JavaPlugin {
     }
 
     public void onDisable() {
-        stopWorkers();
-        executorService.shutdown();
-    }
-
-    public void resizePool() {
-        double workersScore = Worker.getWorkersScore();
-        int neededThreads = (int) (workersScore / Worker.WORKERS_PER_THREAD);
-
-        if (neededThreads == 0 || executorService.getCorePoolSize() == neededThreads) return;
-        executorService.setCorePoolSize(neededThreads);
+        Worker.stopWorkers();
     }
 
     public void postToMainThread(Runnable task) {
@@ -77,13 +67,6 @@ public class VideoToMinecraft extends JavaPlugin {
             process.destroy(); //destroy if somehow, it's open
         } catch (IOException ignored) {
             throw new IllegalStateException("FFMPEG not in path!");
-        }
-    }
-
-    private void stopWorkers() {
-        for (int i = Worker.getWorkers().size() - 1; i >= 0; --i) { //loop in reverse to prevent CME
-            Worker worker = Worker.getWorkers().get(i);
-            worker.finish();
         }
     }
 }
