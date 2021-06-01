@@ -27,16 +27,20 @@ public abstract class Worker {
 
     private static double getWorkersScore() {
         double output = 0;
-        for (Worker worker : workers) {
-            output += worker.getScore();
+        synchronized (workers) {
+            for (Worker worker : workers) {
+                output += worker.getScore();
+            }
         }
         return output;
     }
 
     public static void stopWorkers() {
-        for (int i = workers.size() - 1; i >= 0; --i) { //loop in reverse to prevent CME
-            Worker worker = workers.get(i);
-            worker.finish();
+        synchronized (workers) {
+            for (int i = workers.size() - 1; i >= 0; --i) { //loop in reverse to prevent CME
+                Worker worker = workers.get(i);
+                worker.finish();
+            }
         }
         executorService.shutdown();
     }
