@@ -1,6 +1,5 @@
 package com.birthdates.videotominecraft.worker;
 
-import com.birthdates.videotominecraft.VideoToMinecraft;
 import com.birthdates.videotominecraft.utils.WrappedScheduledThreadPoolExecutor;
 import lombok.Getter;
 import org.jetbrains.annotations.Nullable;
@@ -16,10 +15,9 @@ import java.util.concurrent.ScheduledThreadPoolExecutor;
 public abstract class Worker {
 
     public static final int WORKERS_PER_THREAD = 2;
+    protected static final ScheduledThreadPoolExecutor executorService = new WrappedScheduledThreadPoolExecutor(Worker.WORKERS_PER_THREAD);
     @Getter
     private static final List<Worker> workers = new ArrayList<>();
-    protected static final ScheduledThreadPoolExecutor executorService = new WrappedScheduledThreadPoolExecutor(Worker.WORKERS_PER_THREAD);
-
     @Getter
     @Nullable
     protected Object id;
@@ -33,22 +31,6 @@ public abstract class Worker {
             output += worker.getScore();
         }
         return output;
-    }
-
-    protected void start() {
-        workers.add(this);
-        resizePool();
-    }
-
-    public boolean finish() {
-        if (finished) return false;
-        finished = true;
-
-        if (future != null)
-            future.cancel(false);
-        workers.remove(this);
-        resizePool();
-        return true;
     }
 
     public static void stopWorkers() {
@@ -67,6 +49,21 @@ public abstract class Worker {
         executorService.setCorePoolSize(neededThreads);
     }
 
+    protected void start() {
+        workers.add(this);
+        resizePool();
+    }
+
+    public boolean finish() {
+        if (finished) return false;
+        finished = true;
+
+        if (future != null)
+            future.cancel(false);
+        workers.remove(this);
+        resizePool();
+        return true;
+    }
 
     /**
      * Used for thread count

@@ -4,7 +4,6 @@ import com.birthdates.videotominecraft.command.watch.StopWatchingCommand;
 import com.birthdates.videotominecraft.command.watch.WatchCommand;
 import com.birthdates.videotominecraft.command.watch.WatchMovieCommand;
 import com.birthdates.videotominecraft.configuration.Configuration;
-import com.birthdates.videotominecraft.utils.WrappedScheduledThreadPoolExecutor;
 import com.birthdates.videotominecraft.worker.Worker;
 import lombok.Getter;
 import org.bukkit.Bukkit;
@@ -12,7 +11,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.concurrent.ScheduledThreadPoolExecutor;
 
 @Getter
 public class VideoToMinecraft extends JavaPlugin {
