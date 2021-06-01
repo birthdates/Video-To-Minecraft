@@ -26,7 +26,9 @@ public class WrappedScheduledThreadPoolExecutor extends ScheduledThreadPoolExecu
             }
         }
 
-        if (throwable != null)
-            throwable.printStackTrace();
+        if (throwable == null)
+            return;
+        System.out.println("Failed to run tasks:");
+        throwable.printStackTrace();
     }
 }

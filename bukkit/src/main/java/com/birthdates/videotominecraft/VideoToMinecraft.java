@@ -32,6 +32,7 @@ public class VideoToMinecraft extends JavaPlugin {
 
     public void onDisable() {
         stopWorkers();
+        executorService.shutdown();
     }
 
     public void resizePool() {
