@@ -50,7 +50,9 @@ public abstract class Worker {
     }
 
     protected void start() {
-        workers.add(this);
+        synchronized (workers) {
+            workers.add(this);
+        }
         resizePool();
     }
 
@@ -60,7 +62,9 @@ public abstract class Worker {
 
         if (future != null)
             future.cancel(false);
-        workers.remove(this);
+        synchronized (workers) {
+            workers.remove(this);
+        }
         resizePool();
         return true;
     }
