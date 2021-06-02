@@ -14,7 +14,7 @@ import java.util.concurrent.ScheduledThreadPoolExecutor;
  */
 public abstract class Worker {
 
-    public static final int WORKERS_PER_THREAD = 2;
+    private static final int WORKERS_PER_THREAD = 2;
     protected static final ScheduledThreadPoolExecutor executorService = new WrappedScheduledThreadPoolExecutor(Worker.WORKERS_PER_THREAD);
     @Getter
     private static final List<Worker> workers = new ArrayList<>();
