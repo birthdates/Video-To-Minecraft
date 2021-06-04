@@ -5,4 +5,4 @@ grid-size: 5
 fps: 15
 movie:
   disable-actions: true
-  max-watch-distance: 25.0
+  max-watch-distance: 25.0 # set to 0 to disable (however, this will send the movie to everyone on the server)
