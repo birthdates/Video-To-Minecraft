@@ -1,4 +1,4 @@
-# Video to Minecraft
+# Video to Minecraft ![Release Workflow](https://github.com/birthdates/Video-To-Minecraft/actions/workflows/maven.yml/badge.svg)
 
 This plugin is meant to read video files and allow you to watch it in minecraft using ffmpeg *(no audio)*
 
