@@ -20,6 +20,9 @@ This plugin targets the 1.7-1.17 Bukkit API
 
 * The max extraction time is 120 seconds which can limit your input video's length
 
+# FPS
+FPS is a limited factor due to ping. For example 20 FPS requires less than or equal to 50ms of ping. The equation for this is 1000 / FPS. 
+
 # Next Steps
 
 * Resource pack server to host a templated pack with audio
