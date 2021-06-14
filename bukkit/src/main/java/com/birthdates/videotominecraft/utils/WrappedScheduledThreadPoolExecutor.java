@@ -1,7 +1,10 @@
 package com.birthdates.videotominecraft.utils;
 
+import com.birthdates.videotominecraft.VideoToMinecraft;
+
 import java.util.concurrent.Future;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
+import java.util.logging.Level;
 
 /**
  * This class is used to catch and alert errors in an executor
@@ -28,7 +31,7 @@ public class WrappedScheduledThreadPoolExecutor extends ScheduledThreadPoolExecu
 
         if (throwable == null)
             return;
-        System.out.println("Failed to run tasks:");
+        VideoToMinecraft.getInstance().getLogger().log(Level.WARNING, "Failed to run tasks:");
         throwable.printStackTrace();
     }
 }
